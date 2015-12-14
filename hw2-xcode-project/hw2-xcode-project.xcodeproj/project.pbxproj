@@ -1,0 +1,340 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E963341C1EA4BD00EE7E24 /* display.cpp */; };
+		94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966231C1EA4BF00EE7E24 /* main.cpp */; };
+		94E966661C1EA4BF00EE7E24 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E966251C1EA4BF00EE7E24 /* libfreeimage.a */; };
+		94E966671C1EA4BF00EE7E24 /* readfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966261C1EA4BF00EE7E24 /* readfile.cpp */; };
+		94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */; };
+		94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */; };
+		94E9666A1C1EA4BF00EE7E24 /* grader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966301C1EA4BF00EE7E24 /* grader.cpp */; };
+		94E9666C1C1EA78E00EE7E24 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E9666B1C1EA78E00EE7E24 /* GLUT.framework */; };
+		94E9666E1C1EA7D900EE7E24 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		94E963281C1EA48C00EE7E24 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		94E9632A1C1EA48C00EE7E24 /* hw2-xcode-project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "hw2-xcode-project"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94E963341C1EA4BD00EE7E24 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = "../../hw2-osx-10.9/display.cpp"; sourceTree = "<group>"; };
+		94E966221C1EA4BF00EE7E24 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeImage.h; sourceTree = "<group>"; };
+		94E966231C1EA4BF00EE7E24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../hw2-osx-10.9/main.cpp"; sourceTree = "<group>"; };
+		94E966251C1EA4BF00EE7E24 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreeimage.a; sourceTree = "<group>"; };
+		94E966261C1EA4BF00EE7E24 /* readfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readfile.cpp; path = "../../hw2-osx-10.9/readfile.cpp"; sourceTree = "<group>"; };
+		94E966271C1EA4BF00EE7E24 /* readfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readfile.h; path = "../../hw2-osx-10.9/readfile.h"; sourceTree = "<group>"; };
+		94E966291C1EA4BF00EE7E24 /* light.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.frag.glsl; sourceTree = "<group>"; };
+		94E9662A1C1EA4BF00EE7E24 /* light.vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.vert.glsl; sourceTree = "<group>"; };
+		94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaders.cpp; path = "../../hw2-osx-10.9/shaders.cpp"; sourceTree = "<group>"; };
+		94E9662C1C1EA4BF00EE7E24 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaders.h; path = "../../hw2-osx-10.9/shaders.h"; sourceTree = "<group>"; };
+		94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = "../../hw2-osx-10.9/Transform.cpp"; sourceTree = "<group>"; };
+		94E9662E1C1EA4BF00EE7E24 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = "../../hw2-osx-10.9/Transform.h"; sourceTree = "<group>"; };
+		94E966301C1EA4BF00EE7E24 /* grader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = grader.cpp; sourceTree = "<group>"; };
+		94E966311C1EA4BF00EE7E24 /* grader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = grader.h; sourceTree = "<group>"; };
+		94E966321C1EA4BF00EE7E24 /* variables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = variables.h; path = "../../hw2-osx-10.9/variables.h"; sourceTree = "<group>"; };
+		94E9666B1C1EA78E00EE7E24 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94E963271C1EA48C00EE7E24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E9666E1C1EA7D900EE7E24 /* OpenGL.framework in Frameworks */,
+				94E9666C1C1EA78E00EE7E24 /* GLUT.framework in Frameworks */,
+				94E966661C1EA4BF00EE7E24 /* libfreeimage.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94E963211C1EA48C00EE7E24 = {
+			isa = PBXGroup;
+			children = (
+				94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */,
+				94E9666B1C1EA78E00EE7E24 /* GLUT.framework */,
+				94E9632C1C1EA48C00EE7E24 /* hw2-xcode-project */,
+				94E9632B1C1EA48C00EE7E24 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94E9632B1C1EA48C00EE7E24 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94E9632A1C1EA48C00EE7E24 /* hw2-xcode-project */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94E9632C1C1EA48C00EE7E24 /* hw2-xcode-project */ = {
+			isa = PBXGroup;
+			children = (
+				94E963341C1EA4BD00EE7E24 /* display.cpp */,
+				94E966211C1EA4BF00EE7E24 /* include */,
+				94E966231C1EA4BF00EE7E24 /* main.cpp */,
+				94E966241C1EA4BF00EE7E24 /* osxlib */,
+				94E966261C1EA4BF00EE7E24 /* readfile.cpp */,
+				94E966271C1EA4BF00EE7E24 /* readfile.h */,
+				94E966281C1EA4BF00EE7E24 /* shaders */,
+				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
+				94E9662C1C1EA4BF00EE7E24 /* shaders.h */,
+				94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */,
+				94E9662E1C1EA4BF00EE7E24 /* Transform.h */,
+				94E9662F1C1EA4BF00EE7E24 /* UCSD */,
+				94E966321C1EA4BF00EE7E24 /* variables.h */,
+			);
+			path = "hw2-xcode-project";
+			sourceTree = "<group>";
+		};
+		94E966211C1EA4BF00EE7E24 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				94E966221C1EA4BF00EE7E24 /* FreeImage.h */,
+			);
+			name = include;
+			path = "../../hw2-osx-10.9/include";
+			sourceTree = "<group>";
+		};
+		94E966241C1EA4BF00EE7E24 /* osxlib */ = {
+			isa = PBXGroup;
+			children = (
+				94E966251C1EA4BF00EE7E24 /* libfreeimage.a */,
+			);
+			name = osxlib;
+			path = "../../hw2-osx-10.9/osxlib";
+			sourceTree = "<group>";
+		};
+		94E966281C1EA4BF00EE7E24 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				94E966291C1EA4BF00EE7E24 /* light.frag.glsl */,
+				94E9662A1C1EA4BF00EE7E24 /* light.vert.glsl */,
+			);
+			name = shaders;
+			path = "../../hw2-osx-10.9/shaders";
+			sourceTree = "<group>";
+		};
+		94E9662F1C1EA4BF00EE7E24 /* UCSD */ = {
+			isa = PBXGroup;
+			children = (
+				94E966301C1EA4BF00EE7E24 /* grader.cpp */,
+				94E966311C1EA4BF00EE7E24 /* grader.h */,
+			);
+			name = UCSD;
+			path = "../../hw2-osx-10.9/UCSD";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94E963291C1EA48C00EE7E24 /* hw2-xcode-project */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94E963311C1EA48C00EE7E24 /* Build configuration list for PBXNativeTarget "hw2-xcode-project" */;
+			buildPhases = (
+				94E963261C1EA48C00EE7E24 /* Sources */,
+				94E963271C1EA48C00EE7E24 /* Frameworks */,
+				94E963281C1EA48C00EE7E24 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "hw2-xcode-project";
+			productName = "hw2-xcode-project";
+			productReference = 94E9632A1C1EA48C00EE7E24 /* hw2-xcode-project */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94E963221C1EA48C00EE7E24 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "frank-yuan";
+				TargetAttributes = {
+					94E963291C1EA48C00EE7E24 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 94E963251C1EA48C00EE7E24 /* Build configuration list for PBXProject "hw2-xcode-project" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 94E963211C1EA48C00EE7E24;
+			productRefGroup = 94E9632B1C1EA48C00EE7E24 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94E963291C1EA48C00EE7E24 /* hw2-xcode-project */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94E963261C1EA48C00EE7E24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */,
+				94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */,
+				94E9666A1C1EA4BF00EE7E24 /* grader.cpp in Sources */,
+				94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */,
+				94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */,
+				94E966671C1EA4BF00EE7E24 /* readfile.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		94E9632F1C1EA48C00EE7E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../hw2-osx-10.9/glm-0.9.2.7",
+					"$(SRCROOT)/../hw2-osx-10.9/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../hw2-osx-10.9/osxlib";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		94E963301C1EA48C00EE7E24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../hw2-osx-10.9/glm-0.9.2.7",
+					"$(SRCROOT)/../hw2-osx-10.9/include",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../hw2-osx-10.9/osxlib";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		94E963321C1EA48C00EE7E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+			};
+			name = Debug;
+		};
+		94E963331C1EA48C00EE7E24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94E963251C1EA48C00EE7E24 /* Build configuration list for PBXProject "hw2-xcode-project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E9632F1C1EA48C00EE7E24 /* Debug */,
+				94E963301C1EA48C00EE7E24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94E963311C1EA48C00EE7E24 /* Build configuration list for PBXNativeTarget "hw2-xcode-project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E963321C1EA48C00EE7E24 /* Debug */,
+				94E963331C1EA48C00EE7E24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94E963221C1EA48C00EE7E24 /* Project object */;
+}
