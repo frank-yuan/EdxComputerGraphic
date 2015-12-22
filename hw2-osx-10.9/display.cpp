@@ -62,12 +62,16 @@ void display()
   // So we need to do so manually.  
   if (numused) {
     glUniform1i(enablelighting,true);
+      
+      glUniform1i(numusedcol, numused);
 
-    // YOUR CODE FOR HW 2 HERE.  
-    // You need to pass the light positions and colors to the shader. 
-    // glUniform4fv() and similar functions will be useful. See FAQ for help with these functions.
-    // The lightransf[] array in variables.h and transformvec() might also be useful here.
-    // Remember that light positions must be transformed by modelview.  
+      for (int i = 0; i < numused; ++i)
+      {
+          transformvec(&lightposn[4 * i], &lightransf[4 * i]);
+      }
+      
+      glUniform4fv(lightpos, numused, lightransf);
+      glUniform4fv(lightcol, numused, lightcolor);
 
   } else {
     glUniform1i(enablelighting,false); 
@@ -83,7 +87,7 @@ void display()
   // set up the net transformation matrix for the objects.  
   // Account for GLM issues, matrix order, etc.  
 
-  glLoadMatrixf(&transf[0][0]); 
+  //glLoadMatrixf(&(mv * transf)[0][0]);
 
   for (int i = 0 ; i < numobjects ; i++) {
     object* obj = &(objects[i]); // Grabs an object struct.
@@ -92,6 +96,12 @@ void display()
     // Set up the object transformations 
     // And pass in the appropriate material properties
     // Again glUniform() related functions will be useful
+    glLoadMatrixf(&(mv * obj->transform)[0][0]);
+      glUniform4fv(ambientcol, 1, ambient);
+      glUniform4fv(diffusecol, 1, diffuse);
+      glUniform4fv(specularcol, 1, specular);
+      glUniform1f(shininesscol, shininess);
+      
 
     // Actually draw the object
     // We provide the actual glut drawing functions for you.  
