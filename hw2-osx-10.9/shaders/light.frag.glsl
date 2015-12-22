@@ -33,17 +33,37 @@ uniform float shininess;
 
 void main (void) 
 {       
-    if (enablelighting) {       
-        vec4 finalcolor; 
+    if (enablelighting) {
+        vec4 finalcolor = vec4(0);
 
         // YOUR CODE FOR HW 2 HERE
         // A key part is implementation of the fragment shader
+        vec4 viewVertex = gl_ModelViewMatrix * myvertex;
 
+        vec3 eyedir = normalize(-viewVertex.xyz);
+        // WHY I CANNOT USE NORMALIZE BEFORE MODEL VIEW INVERSE TRANSPOSE   ????????
+        vec3 normal = (gl_ModelViewMatrixInverseTranspose * vec4(mynormal, 0)).xyz;
+        
+        for (int i = 0; i < numused; ++i)
+        {
+            vec3 lightpos = lightposn[i].xyz;
+            vec3 lightdir = normalize(lightpos - viewVertex.xyz);
+            float lightdiffuse = max(0, dot(lightdir, normal));
+            // diffuse
+            finalcolor += lightdiffuse * lightcolor[i] * diffuse;
+            //finalcolor = diffuse;//vec4(lightdiffuse,lightdiffuse,lightdiffuse, 1);
+            
+            // specular
+            vec3 reflect = normalize(2 * normal * dot(lightdir, normal) - lightdir);
+            
+            finalcolor += pow(max(0, dot(reflect, eyedir)), shininess) * lightcolor[i] * specular;
+        }
         // Color all pixels black for now, remove this in your implementation!
-        finalcolor = vec4(0,0,0,1); 
+ 
+        finalcolor += ambient + emission;
 
         gl_FragColor = finalcolor; 
     } else {
-        gl_FragColor = color; 
+        gl_FragColor = color;
     }
 }

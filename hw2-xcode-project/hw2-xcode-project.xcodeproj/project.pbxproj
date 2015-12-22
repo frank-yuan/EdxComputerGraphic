@@ -31,6 +31,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		94D0D59A1C207C5900DB0AA2 /* demo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = demo.txt; path = "../hw2-osx-10.9/demo.txt"; sourceTree = "<group>"; };
+		94D0D59B1C207C5900DB0AA2 /* hw1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hw1.txt; path = "../hw2-osx-10.9/hw1.txt"; sourceTree = "<group>"; };
+		94D0D59C1C207C5900DB0AA2 /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = input.txt; path = "../hw2-osx-10.9/input.txt"; sourceTree = "<group>"; };
+		94D0D59D1C207C5900DB0AA2 /* scene.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene.txt; path = "../hw2-osx-10.9/scene.txt"; sourceTree = "<group>"; };
+		94D0D59E1C207C5900DB0AA2 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.txt; path = "../hw2-osx-10.9/test.txt"; sourceTree = "<group>"; };
 		94E9632A1C1EA48C00EE7E24 /* hw2-xcode-project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "hw2-xcode-project"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94E963341C1EA4BD00EE7E24 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = "../../hw2-osx-10.9/display.cpp"; sourceTree = "<group>"; };
 		94E966221C1EA4BF00EE7E24 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeImage.h; sourceTree = "<group>"; };
@@ -49,6 +54,8 @@
 		94E966321C1EA4BF00EE7E24 /* variables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = variables.h; path = "../../hw2-osx-10.9/variables.h"; sourceTree = "<group>"; };
 		94E9666B1C1EA78E00EE7E24 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		94EAC2391C1F0B2F00572B0D /* light.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.frag.glsl; sourceTree = "<group>"; };
+		94EAC23A1C1F0B2F00572B0D /* light.vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.vert.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +72,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94D0D5991C207C3F00DB0AA2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				94D0D59A1C207C5900DB0AA2 /* demo.txt */,
+				94D0D59B1C207C5900DB0AA2 /* hw1.txt */,
+				94D0D59C1C207C5900DB0AA2 /* input.txt */,
+				94D0D59D1C207C5900DB0AA2 /* scene.txt */,
+				94D0D59E1C207C5900DB0AA2 /* test.txt */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
 		94E963211C1EA48C00EE7E24 = {
 			isa = PBXGroup;
 			children = (
+				94D0D5991C207C3F00DB0AA2 /* Resource */,
+				94EAC2381C1F0B2F00572B0D /* shaders */,
 				94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */,
 				94E9666B1C1EA78E00EE7E24 /* GLUT.framework */,
 				94E9632C1C1EA48C00EE7E24 /* hw2-xcode-project */,
@@ -139,6 +160,16 @@
 			);
 			name = UCSD;
 			path = "../../hw2-osx-10.9/UCSD";
+			sourceTree = "<group>";
+		};
+		94EAC2381C1F0B2F00572B0D /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				94EAC2391C1F0B2F00572B0D /* light.frag.glsl */,
+				94EAC23A1C1F0B2F00572B0D /* light.vert.glsl */,
+			);
+			name = shaders;
+			path = "../hw2-osx-10.9/shaders";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,6 +364,7 @@
 				94E963331C1EA48C00EE7E24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
