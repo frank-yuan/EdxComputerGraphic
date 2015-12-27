@@ -81,7 +81,8 @@ void display()
   mat4 sc(1.0) , tr(1.0), transf(1.0); 
   sc = Transform::scale(sx,sy,1.0); 
   tr = Transform::translate(tx,ty,0.0);
-    transf = sc * tr;
+    // Why Scale first?
+    transf = tr * sc;
 
   // YOUR CODE FOR HW 2 HERE.  
   // You need to use scale, translate and modelview to 
