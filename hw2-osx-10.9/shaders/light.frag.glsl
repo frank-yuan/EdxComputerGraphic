@@ -61,7 +61,7 @@ void main (void)
             
             // specular
             vec3 reflect = normalize(eyedir + lightdir);
-            finalcolor += pow(max(0, dot(reflect, eyedir)), shininess) * lightcolor[i] * specular;
+            finalcolor += pow(max(0, dot(reflect, normal)), shininess) * lightcolor[i] * specular;
         }
         
         finalcolor += ambient + emission;

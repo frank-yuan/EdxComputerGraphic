@@ -37,7 +37,7 @@ void Transform::left(float degrees, vec3& eye, vec3& up)
     vec3 lookAt = glm::normalize(eye);
     vec3 axis = glm::cross(lookAt, up);
     
-    eye = rotate(-degrees, up) * eye;
+    eye = rotate(degrees, up) * eye;
     up = glm::normalize(glm::cross(axis, eye));
 
 }
@@ -47,7 +47,7 @@ void Transform::up(float degrees, vec3& eye, vec3& up)
     vec3 lookAt = glm::normalize(eye);
     vec3 axis = glm::cross(lookAt, up);
     
-    eye = rotate(-degrees, axis) * eye;
+    eye = rotate(degrees, axis) * eye;
     up = glm::normalize(glm::cross(axis, eye));
 }
 
@@ -67,13 +67,16 @@ mat4 Transform::lookAt(const vec3 &eyepos, const vec3 &center, const vec3 &up)
 
 mat4 Transform::perspective(float fovy, float aspect, float zNear, float zFar)
 {
-  mat4 ret;
-  // YOUR CODE FOR HW2 HERE
-  // New, to implement the perspective transform as well.  
-  return ret;
+    float a = 1/tanf(fovy*pi/180/2);
+    float b = -1/(zFar - zNear);
+ 
+    return (mat4(a/aspect, 0, 0, 0,
+                0, a, 0, 0,
+                0, 0, b*(zFar + zNear), -1,
+                0, 0, 2 * zFar * zNear * b, 0));
 }
 
-mat4 Transform::scale(const float &sx, const float &sy, const float &sz) 
+mat4 Transform::scale(const float &sx, const float &sy, const float &sz)
 {
     return mat4(sx, 0, 0, 0,
               0, sy, 0, 0,

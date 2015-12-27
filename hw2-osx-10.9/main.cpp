@@ -43,9 +43,7 @@ void reshape(int width, int height)
   if (useGlu) {
     mv = glm::perspective(fovy,aspect,zNear,zFar); 
   } else {
-      mv = glm::perspective(fovy,aspect,zNear,zFar);
-      
-//    mv = Transform::perspective(fovy,aspect,zNear,zFar);
+    mv = Transform::perspective(fovy,aspect,zNear,zFar);
   }
 
   glLoadMatrixf(&mv[0][0]); 
