@@ -80,7 +80,8 @@ void display()
   // Transformations for objects, involving translation and scaling 
   mat4 sc(1.0) , tr(1.0), transf(1.0); 
   sc = Transform::scale(sx,sy,1.0); 
-  tr = Transform::translate(tx,ty,0.0); 
+  tr = Transform::translate(tx,ty,0.0);
+    transf = sc * tr;
 
   // YOUR CODE FOR HW 2 HERE.  
   // You need to use scale, translate and modelview to 
@@ -96,11 +97,11 @@ void display()
     // Set up the object transformations 
     // And pass in the appropriate material properties
     // Again glUniform() related functions will be useful
-    glLoadMatrixf(&(mv * obj->transform)[0][0]);
-      glUniform4fv(ambientcol, 1, ambient);
-      glUniform4fv(diffusecol, 1, diffuse);
-      glUniform4fv(specularcol, 1, specular);
-      glUniform1f(shininesscol, shininess);
+    glLoadMatrixf(&(mv * transf * obj->transform)[0][0]);
+      glUniform4fv(ambientcol, 1, obj->ambient);
+      glUniform4fv(diffusecol, 1, obj->diffuse);
+      glUniform4fv(specularcol, 1, obj->specular);
+      glUniform1f(shininesscol, obj->shininess);
       
 
     // Actually draw the object

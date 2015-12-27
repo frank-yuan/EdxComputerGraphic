@@ -43,8 +43,6 @@
 		94E966251C1EA4BF00EE7E24 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreeimage.a; sourceTree = "<group>"; };
 		94E966261C1EA4BF00EE7E24 /* readfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readfile.cpp; path = "../../hw2-osx-10.9/readfile.cpp"; sourceTree = "<group>"; };
 		94E966271C1EA4BF00EE7E24 /* readfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readfile.h; path = "../../hw2-osx-10.9/readfile.h"; sourceTree = "<group>"; };
-		94E966291C1EA4BF00EE7E24 /* light.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.frag.glsl; sourceTree = "<group>"; };
-		94E9662A1C1EA4BF00EE7E24 /* light.vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.vert.glsl; sourceTree = "<group>"; };
 		94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaders.cpp; path = "../../hw2-osx-10.9/shaders.cpp"; sourceTree = "<group>"; };
 		94E9662C1C1EA4BF00EE7E24 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaders.h; path = "../../hw2-osx-10.9/shaders.h"; sourceTree = "<group>"; };
 		94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = "../../hw2-osx-10.9/Transform.cpp"; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				94E966241C1EA4BF00EE7E24 /* osxlib */,
 				94E966261C1EA4BF00EE7E24 /* readfile.cpp */,
 				94E966271C1EA4BF00EE7E24 /* readfile.h */,
-				94E966281C1EA4BF00EE7E24 /* shaders */,
 				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
 				94E9662C1C1EA4BF00EE7E24 /* shaders.h */,
 				94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */,
@@ -140,16 +137,6 @@
 			);
 			name = osxlib;
 			path = "../../hw2-osx-10.9/osxlib";
-			sourceTree = "<group>";
-		};
-		94E966281C1EA4BF00EE7E24 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				94E966291C1EA4BF00EE7E24 /* light.frag.glsl */,
-				94E9662A1C1EA4BF00EE7E24 /* light.vert.glsl */,
-			);
-			name = shaders;
-			path = "../../hw2-osx-10.9/shaders";
 			sourceTree = "<group>";
 		};
 		94E9662F1C1EA4BF00EE7E24 /* UCSD */ = {
