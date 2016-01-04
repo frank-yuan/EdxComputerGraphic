@@ -12,7 +12,7 @@
 #else
 #define EXTERN extern
 #endif
-
+#include <vector>
 EXTERN int amount; // The amount of rotation for each arrow press
 EXTERN vec3 eye; // The (regularly updated) vector coordinates of the eye
 EXTERN vec3 up;  // The (regularly updated) vector coordinates of the up
@@ -27,6 +27,8 @@ float fovy = 90.0 ; // For field of view
 
 // for ray tracer
 int maxdepth;
+int maxverts;
+int maxvertnorms;
 #else
 EXTERN vec3 eyeinit ;
 EXTERN vec3 upinit ;
@@ -37,12 +39,14 @@ EXTERN float fovy ;
 
 // for ray tracer
 EXTERN int maxdepth;
+EXTERN int maxverts;
+EXTERN int maxvertnorms;
 #endif
 
 EXTERN bool useGlu; // Toggle use of "official" opengl/glm transform vs user
 EXTERN GLuint vertexshader, fragmentshader, shaderprogram ; // shaders
 static enum {view, translate, scale} transop ; // which operation to transform
-enum shape {cube, sphere, teapot} ;
+
 EXTERN float sx, sy ; // the scale in x and y
 EXTERN float tx, ty ; // the translation in x and y
 
@@ -62,18 +66,13 @@ EXTERN GLfloat emission[4] ;
 EXTERN GLfloat shininess ;
 
 // For multiple objects, read from a file.
-const int maxobjects = 10 ;
-EXTERN int numobjects ;
-EXTERN struct object {
-    shape type ;
-    GLfloat size ;
-    GLfloat ambient[4] ;
-    GLfloat diffuse[4] ;
-    GLfloat specular[4] ;
-    GLfloat emission[4] ;
-    GLfloat shininess ;
-    mat4 transform ;
-} objects[maxobjects] ;
+extern class object;
+EXTERN std::vector<object*> objects;
+extern struct point_light;
+EXTERN std::vector<point_light*> pointlights;
+extern struct direction_light;
+EXTERN std::vector<direction_light*> directionlights;
+
 
 // Variables to set uniform params for lighting fragment shader
 EXTERN GLuint lightcol ;

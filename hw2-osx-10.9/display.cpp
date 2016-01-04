@@ -18,6 +18,7 @@
 using namespace std ;
 #include "variables.h"
 #include "readfile.h"
+#include "object.h"
 
 // New helper transformation function to transform vector by modelview
 // May be better done using newer glm functionality.
@@ -91,35 +92,34 @@ void display()
     
     //glLoadMatrixf(&(mv * transf)[0][0]);
     
-    for (int i = 0 ; i < numobjects ; i++) {
-        object* obj = &(objects[i]); // Grabs an object struct.
-        
-        // YOUR CODE FOR HW 2 HERE.
-        // Set up the object transformations
-        // And pass in the appropriate material properties
-        // Again glUniform() related functions will be useful
-        glLoadMatrixf(&(mv * transf * obj->transform)[0][0]);
-        glUniform4fv(ambientcol, 1, obj->ambient);
-        glUniform4fv(diffusecol, 1, obj->diffuse);
-        glUniform4fv(specularcol, 1, obj->specular);
-        glUniform1f(shininesscol, obj->shininess);
-        
-        
-        // Actually draw the object
-        // We provide the actual glut drawing functions for you.
-        // Remember that obj->type is notation for accessing struct fields
-        if (obj->type == cube) {
-            glutSolidCube(obj->size);
-        }
-        else if (obj->type == sphere) {
-            const int tessel = 20; 
-            glutSolidSphere(obj->size, tessel, tessel); 
-        }
-        else if (obj->type == teapot) {
-            glutSolidTeapot(obj->size); 
-        }
-        
-    }
+//    for (int i = 0 ; i < numobjects ; i++) {
+//        object* obj = &(objects[i]); // Grabs an object struct.
+//        
+//        // YOUR CODE FOR HW 2 HERE.
+//        // Set up the object transformations
+//        // And pass in the appropriate material properties
+//        // Again glUniform() related functions will be useful
+//        glLoadMatrixf(&(mv * transf * obj->transform)[0][0]);
+//        glUniform4fv(ambientcol, 1, obj->ambient);
+//        glUniform4fv(diffusecol, 1, obj->diffuse);
+//        glUniform4fv(specularcol, 1, obj->specular);
+//        glUniform1f(shininesscol, obj->shininess);
+//        
+//        
+//        // Actually draw the object
+//        // We provide the actual glut drawing functions for you.
+//        // Remember that obj->type is notation for accessing struct fields
+//        if (obj->type == cube) {
+//            glutSolidCube(obj->size);
+//        }
+//        else if (obj->type == sphere) {
+//            const int tessel = 20; 
+//            glutSolidSphere(obj->size, tessel, tessel); 
+//        }
+//        else if (obj->type == teapot) {
+//            glutSolidTeapot(obj->size); 
+//        }
+//    }
     
     glutSwapBuffers();
 }

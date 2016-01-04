@@ -32,6 +32,9 @@
 
 /* Begin PBXFileReference section */
 		942A408A1C38DA010017284B /* raytracer_display.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = raytracer_display.cpp; sourceTree = "<group>"; };
+		948CAFDA1C3971D2007C2366 /* object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
+		948CAFDB1C3AAD4B007C2366 /* object_transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object_transform.h; sourceTree = "<group>"; };
+		948CAFDC1C3AAFA3007C2366 /* light.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = "<group>"; };
 		94D0D59A1C207C5900DB0AA2 /* demo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = demo.txt; path = "../hw2-osx-10.9/demo.txt"; sourceTree = "<group>"; };
 		94D0D59B1C207C5900DB0AA2 /* hw1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hw1.txt; path = "../hw2-osx-10.9/hw1.txt"; sourceTree = "<group>"; };
 		94D0D59C1C207C5900DB0AA2 /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = input.txt; path = "../hw2-osx-10.9/input.txt"; sourceTree = "<group>"; };
@@ -86,8 +89,8 @@
 			children = (
 				94D0D5991C207C3F00DB0AA2 /* Resource */,
 				94EAC2381C1F0B2F00572B0D /* shaders */,
-				94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */,
 				94E9666B1C1EA78E00EE7E24 /* GLUT.framework */,
+				94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */,
 				94E9632C1C1EA48C00EE7E24 /* hw2-xcode-project */,
 				94E9632B1C1EA48C00EE7E24 /* Products */,
 			);
@@ -104,10 +107,10 @@
 		94E9632C1C1EA48C00EE7E24 /* hw2-xcode-project */ = {
 			isa = PBXGroup;
 			children = (
-				94E963341C1EA4BD00EE7E24 /* display.cpp */,
 				94E966211C1EA4BF00EE7E24 /* include */,
-				94E966231C1EA4BF00EE7E24 /* main.cpp */,
 				94E966241C1EA4BF00EE7E24 /* osxlib */,
+				94E963341C1EA4BD00EE7E24 /* display.cpp */,
+				94E966231C1EA4BF00EE7E24 /* main.cpp */,
 				94E966261C1EA4BF00EE7E24 /* readfile.cpp */,
 				94E966271C1EA4BF00EE7E24 /* readfile.h */,
 				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
@@ -116,6 +119,9 @@
 				94E9662E1C1EA4BF00EE7E24 /* Transform.h */,
 				94E966321C1EA4BF00EE7E24 /* variables.h */,
 				942A408A1C38DA010017284B /* raytracer_display.cpp */,
+				948CAFDA1C3971D2007C2366 /* object.h */,
+				948CAFDB1C3AAD4B007C2366 /* object_transform.h */,
+				948CAFDC1C3AAFA3007C2366 /* light.h */,
 			);
 			path = "hw2-xcode-project";
 			sourceTree = "<group>";

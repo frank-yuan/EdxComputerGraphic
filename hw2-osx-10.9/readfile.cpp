@@ -27,12 +27,15 @@
 #include <sstream>
 #include <deque>
 #include <stack>
+#include <vector>
 #include <GLUT/glut.h>
 #include "Transform.h"
 
 using namespace std;
 #include "variables.h"
 #include "readfile.h"
+#include "object.h"
+#include "light.h"
 
 
 // You may not need to use the following two functions, but it is provided
@@ -93,24 +96,31 @@ void readfile(const char* filename)
                 
                 // Process the light, add it to database.
                 // Lighting Command
-                if (cmd == "light") {
-                    if (numused == numLights) { // No more Lights
-                        cerr << "Reached Maximum Number of Lights " << numused << " Will ignore further lights\n";
-                    } else {
-                        validinput = readvals(s, 8, values); // Position/color for lts.
-                        if (validinput) {
-                            
-                            for (int j = 0; j < 4; ++j)
-                            {
-                                lightposn[numused * 4 + j] = values[j];
-                            }
-                            for (int j = 0; j < 4; ++j)
-                            {
-                                lightcolor[numused * 4 + j] = values[4 + j];
-                            }
-                            
-                            ++numused;
-                        }
+                if (cmd == "point") {
+                    validinput = readvals(s, 6, values);
+                    if (validinput)
+                    {
+                        point_light* light = new point_light();
+                        light->location = glm::vec3(values[0], values[1], values[2]);
+                        light->color = glm::vec4(values[4], values[5], values[6], 1);
+                    }
+                }
+                else if (cmd == "directional") {
+                    validinput = readvals(s, 6, values);
+                    if (validinput)
+                    {
+                        direction_light* light = new direction_light();
+                        light->direction = glm::vec3(values[0], values[1], values[2]);
+                        light->color = glm::vec4(values[4], values[5], values[6], 1);
+                    }
+                }
+                else if (cmd == "ambient")
+                {
+                    validinput = readvals(s, 3, values);
+                    if (validinput)
+                    {
+                        ambient_light* light = new ambient_light();
+                        light->color = glm::vec4(values[0], values[1], values[2], 1);
                     }
                 }
                 
@@ -187,10 +197,35 @@ void readfile(const char* filename)
                     }
                 }
                 
+                else if (cmd == "sphere")
+                {
+                    validinput = readvals(s, 4, values);
+                    if (validinput)
+                    {
+                        sphere_object* obj = new sphere_object();
+                        obj->size = values[3];
+                        for (i = 0; i < 4; i++) {
+                            (obj->ambient)[i] = ambient[i];
+                            (obj->diffuse)[i] = diffuse[i];
+                            (obj->specular)[i] = specular[i];
+                            (obj->emission)[i] = emission[i];
+                        }
+                        obj->shininess = shininess;
+                        
+                        // Set the object's transform
+                        obj->transform.SetTransform(transfstack.top() * glm::mat4(glm::vec4(1, 0, 0, 0),
+                                                                       glm::vec4(0, 1, 0, 0),
+                                                                       glm::vec4(0, 0, 1, 0),
+                                                                       glm::vec4(values[1], values[2], values[3], 1)
+                                                                                  ));
+                        objects.push_back((object*)obj);
+                    }
+                }
+                
                 // I've left the code for loading objects in the skeleton, so
                 // you can get a sense of how this works.
                 // Also look at demo.txt to get a sense of why things are done this way.
-                else if (cmd == "sphere" || cmd == "cube" || cmd == "teapot") {
+/*                else if (cmd == "sphere" || cmd == "cube" || cmd == "teapot") {
                     if (numobjects == maxobjects) { // No more objects
                         cerr << "Reached Maximum Number of Objects " << numobjects << " Will ignore further objects\n";
                     } else {
@@ -222,7 +257,7 @@ void readfile(const char* filename)
                         }
                         ++numobjects;
                     }
-                }
+                }*/
                 
                 else if (cmd == "translate") {
                     validinput = readvals(s,3,values);

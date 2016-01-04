@@ -189,6 +189,8 @@ int main(int argc, char* argv[])
         glutReshapeFunc(reshape);
         readfile(argv[1]);
         glEnable(GL_DEPTH_TEST);
+        glutSpecialFunc(specialKey);
+        glutKeyboardFunc(keyboard);
     }
     else
     {
@@ -199,8 +201,6 @@ int main(int argc, char* argv[])
         glutReshapeFunc(raytracer_reshape);
     }
     
-    glutSpecialFunc(specialKey);
-    glutKeyboardFunc(keyboard);
     glutReshapeWindow(w, h);
     
     
