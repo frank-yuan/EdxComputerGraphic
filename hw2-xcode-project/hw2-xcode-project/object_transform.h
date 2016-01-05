@@ -13,7 +13,7 @@
 
 struct object_transform
 {
-    void SetTranslation(vec3& location);
+    void SetTranslation(glm::vec3& location);
     inline void SetTransform(const glm::mat4& mat){trans = mat;}
 private:
     glm::mat4 trans;

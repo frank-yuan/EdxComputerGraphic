@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		942A408B1C38DA960017284B /* raytracer_display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 942A408A1C38DA010017284B /* raytracer_display.cpp */; };
+		94B072551C3C0C6E00BF9CC9 /* raytrace_camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B072541C3C0C6E00BF9CC9 /* raytrace_camera.cpp */; };
+		94B072571C3C0E3C00BF9CC9 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B072561C3C0E3C00BF9CC9 /* scene.cpp */; };
 		94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E963341C1EA4BD00EE7E24 /* display.cpp */; };
 		94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966231C1EA4BF00EE7E24 /* main.cpp */; };
 		94E966661C1EA4BF00EE7E24 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E966251C1EA4BF00EE7E24 /* libfreeimage.a */; };
@@ -35,6 +37,11 @@
 		948CAFDA1C3971D2007C2366 /* object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		948CAFDB1C3AAD4B007C2366 /* object_transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object_transform.h; sourceTree = "<group>"; };
 		948CAFDC1C3AAFA3007C2366 /* light.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = "<group>"; };
+		94B072521C3C065200BF9CC9 /* raytrace_camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raytrace_camera.h; sourceTree = "<group>"; };
+		94B072531C3C0BB600BF9CC9 /* scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene.h; sourceTree = "<group>"; };
+		94B072541C3C0C6E00BF9CC9 /* raytrace_camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = raytrace_camera.cpp; sourceTree = "<group>"; };
+		94B072561C3C0E3C00BF9CC9 /* scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
+		94B072581C3C1DD600BF9CC9 /* myutil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myutil.h; sourceTree = "<group>"; };
 		94D0D59A1C207C5900DB0AA2 /* demo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = demo.txt; path = "../hw2-osx-10.9/demo.txt"; sourceTree = "<group>"; };
 		94D0D59B1C207C5900DB0AA2 /* hw1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hw1.txt; path = "../hw2-osx-10.9/hw1.txt"; sourceTree = "<group>"; };
 		94D0D59C1C207C5900DB0AA2 /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = input.txt; path = "../hw2-osx-10.9/input.txt"; sourceTree = "<group>"; };
@@ -122,6 +129,11 @@
 				948CAFDA1C3971D2007C2366 /* object.h */,
 				948CAFDB1C3AAD4B007C2366 /* object_transform.h */,
 				948CAFDC1C3AAFA3007C2366 /* light.h */,
+				94B072521C3C065200BF9CC9 /* raytrace_camera.h */,
+				94B072541C3C0C6E00BF9CC9 /* raytrace_camera.cpp */,
+				94B072531C3C0BB600BF9CC9 /* scene.h */,
+				94B072561C3C0E3C00BF9CC9 /* scene.cpp */,
+				94B072581C3C1DD600BF9CC9 /* myutil.h */,
 			);
 			path = "hw2-xcode-project";
 			sourceTree = "<group>";
@@ -210,7 +222,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94B072571C3C0E3C00BF9CC9 /* scene.cpp in Sources */,
 				942A408B1C38DA960017284B /* raytracer_display.cpp in Sources */,
+				94B072551C3C0C6E00BF9CC9 /* raytrace_camera.cpp in Sources */,
 				94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */,
 				94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */,
 				94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */,

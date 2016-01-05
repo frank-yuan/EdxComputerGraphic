@@ -72,6 +72,7 @@ extern struct point_light;
 EXTERN std::vector<point_light*> pointlights;
 extern struct direction_light;
 EXTERN std::vector<direction_light*> directionlights;
+EXTERN std::string fname;
 
 
 // Variables to set uniform params for lighting fragment shader

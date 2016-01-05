@@ -29,11 +29,11 @@ enum shape
 class scene_object {
 public:
     shape type ;
-    GLfloat ambient[4] ;
-    GLfloat diffuse[4] ;
-    GLfloat specular[4] ;
-    GLfloat emission[4] ;
-    GLfloat shininess ;
+    float ambient[4] ;
+    float diffuse[4] ;
+    float specular[4] ;
+    float emission[4] ;
+    float shininess ;
     object_transform transform;
     
 };
@@ -41,7 +41,7 @@ public:
 class sphere_object : public scene_object
 {
 public:
-    GLfloat size ;
+    float size ;
 };
 
 class mesh_object : public scene_object
