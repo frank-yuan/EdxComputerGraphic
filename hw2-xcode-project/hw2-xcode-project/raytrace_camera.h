@@ -19,6 +19,10 @@ struct raycast_hit
     glm::vec3 location;
     glm::vec3 normal;
     glm::vec3 color;
+    float distance;
+    raycast_hit(): distance(100000), object(NULL)
+    {
+    }
 };
 
 class raytrace_camera

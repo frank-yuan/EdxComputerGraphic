@@ -31,22 +31,22 @@ enum shape
 class scene_object {
 public:
     shape type ;
-    float ambient[3] ;
-    float diffuse[3] ;
-    float specular[3] ;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 //    float emission[4] ;
     float shininess ;
     object_transform transform;
     
-    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
+    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit) = 0;
     
 };
 
 class sphere_object : public scene_object
 {
 public:
-    float size ;
-    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
+    float radius ;
+    void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
 };
 
 class mesh_object : public scene_object
@@ -54,7 +54,7 @@ class mesh_object : public scene_object
 public:
     void LoadVertices(int count, vec3 data[]);
     void LoadTriangles(int count, ivec3 data[]);
-    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
+    void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
 private:
     int vertex_count;
     vec3* vertices;

@@ -48,41 +48,41 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     mat4 mv;
     
-    // Either use the built-in lookAt function or the lookAt implemented by the user.
-    if (useGlu) {
-        mv = glm::lookAt(eye,center,up);
-    } else {
-        mv = Transform::lookAt(eye,center,up);
-    }
-    
-    glLoadMatrixf(&mv[0][0]);
-    
-    // Lights are transformed by current modelview matrix.
-    // The shader can't do this globally.
-    // So we need to do so manually.
-    if (numused) {
-        glUniform1i(enablelighting,true);
-        
-        glUniform1i(numusedcol, numused);
-        
-        for (int i = 0; i < numused; ++i)
-        {
-            transformvec(&lightposn[4 * i], &lightransf[4 * i]);
-        }
-        
-        glUniform4fv(lightpos, numused, lightransf);
-        glUniform4fv(lightcol, numused, lightcolor);
-        
-    } else {
-        glUniform1i(enablelighting,false);
-    }
-    
-    // Transformations for objects, involving translation and scaling
-    mat4 sc(1.0) , tr(1.0), transf(1.0);
-    sc = Transform::scale(sx,sy,1.0);
-    tr = Transform::translate(tx,ty,0.0);
-    // Why Scale first?
-    transf = tr * sc;
+//    // Either use the built-in lookAt function or the lookAt implemented by the user.
+//    if (useGlu) {
+//        mv = glm::lookAt(eye,center,up);
+//    } else {
+//        mv = Transform::lookAt(eye,center,up);
+//    }
+//    
+//    glLoadMatrixf(&mv[0][0]);
+//    
+//    // Lights are transformed by current modelview matrix.
+//    // The shader can't do this globally.
+//    // So we need to do so manually.
+//    if (numused) {
+//        glUniform1i(enablelighting,true);
+//        
+//        glUniform1i(numusedcol, numused);
+//        
+//        for (int i = 0; i < numused; ++i)
+//        {
+//            transformvec(&lightposn[4 * i], &lightransf[4 * i]);
+//        }
+//        
+//        glUniform4fv(lightpos, numused, lightransf);
+//        glUniform4fv(lightcol, numused, lightcolor);
+//        
+//    } else {
+//        glUniform1i(enablelighting,false);
+//    }
+//    
+//    // Transformations for objects, involving translation and scaling
+//    mat4 sc(1.0) , tr(1.0), transf(1.0);
+//    sc = Transform::scale(sx,sy,1.0);
+//    tr = Transform::translate(tx,ty,0.0);
+//    // Why Scale first?
+//    transf = tr * sc;
     
     // YOUR CODE FOR HW 2 HERE.
     // You need to use scale, translate and modelview to

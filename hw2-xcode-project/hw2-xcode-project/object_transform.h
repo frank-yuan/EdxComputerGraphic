@@ -15,8 +15,8 @@ struct object_transform
 {
     void SetTranslation(glm::vec3& location);
     inline void SetTransform(const glm::mat4& mat){trans = mat;}
+    glm::vec3 GetLocation() const{return glm::vec3(trans[3]) / trans[3][3];}
 private:
-    glm::mat4 trans;
-};
+    glm::mat4 trans;};
 
 #endif /* transform_h */

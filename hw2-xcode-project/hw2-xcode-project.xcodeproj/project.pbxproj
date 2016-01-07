@@ -10,7 +10,7 @@
 		942A408B1C38DA960017284B /* raytracer_display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 942A408A1C38DA010017284B /* raytracer_display.cpp */; };
 		94B072551C3C0C6E00BF9CC9 /* raytrace_camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B072541C3C0C6E00BF9CC9 /* raytrace_camera.cpp */; };
 		94B072571C3C0E3C00BF9CC9 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B072561C3C0E3C00BF9CC9 /* scene.cpp */; };
-		94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E963341C1EA4BD00EE7E24 /* display.cpp */; };
+		94D6CB261C3E9AAD00FD0F69 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D6CB251C3E9AAD00FD0F69 /* object.cpp */; };
 		94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966231C1EA4BF00EE7E24 /* main.cpp */; };
 		94E966661C1EA4BF00EE7E24 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E966251C1EA4BF00EE7E24 /* libfreeimage.a */; };
 		94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */; };
@@ -46,8 +46,9 @@
 		94D0D59C1C207C5900DB0AA2 /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = input.txt; path = "../hw2-osx-10.9/input.txt"; sourceTree = "<group>"; };
 		94D0D59D1C207C5900DB0AA2 /* scene.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = scene.txt; path = "../hw2-osx-10.9/scene.txt"; sourceTree = "<group>"; };
 		94D0D59E1C207C5900DB0AA2 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.txt; path = "../hw2-osx-10.9/test.txt"; sourceTree = "<group>"; };
+		94D6CB251C3E9AAD00FD0F69 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cpp; sourceTree = "<group>"; };
+		94D6CB271C3EAACC00FD0F69 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		94E9632A1C1EA48C00EE7E24 /* hw2-xcode-project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "hw2-xcode-project"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94E963341C1EA4BD00EE7E24 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = "../../hw2-osx-10.9/display.cpp"; sourceTree = "<group>"; };
 		94E966221C1EA4BF00EE7E24 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeImage.h; sourceTree = "<group>"; };
 		94E966231C1EA4BF00EE7E24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../hw2-osx-10.9/main.cpp"; sourceTree = "<group>"; };
 		94E966251C1EA4BF00EE7E24 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreeimage.a; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		94E9662C1C1EA4BF00EE7E24 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaders.h; path = "../../hw2-osx-10.9/shaders.h"; sourceTree = "<group>"; };
 		94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = "../../hw2-osx-10.9/Transform.cpp"; sourceTree = "<group>"; };
 		94E9662E1C1EA4BF00EE7E24 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = "../../hw2-osx-10.9/Transform.h"; sourceTree = "<group>"; };
-		94E966321C1EA4BF00EE7E24 /* variables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = variables.h; path = "../../hw2-osx-10.9/variables.h"; sourceTree = "<group>"; };
 		94E9666B1C1EA78E00EE7E24 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		94EAC2391C1F0B2F00572B0D /* light.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.frag.glsl; sourceTree = "<group>"; };
@@ -113,15 +113,12 @@
 			children = (
 				94E966211C1EA4BF00EE7E24 /* include */,
 				94E966241C1EA4BF00EE7E24 /* osxlib */,
-				94E963341C1EA4BD00EE7E24 /* display.cpp */,
 				94E966231C1EA4BF00EE7E24 /* main.cpp */,
-				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
 				94E9662C1C1EA4BF00EE7E24 /* shaders.h */,
+				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
 				94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */,
 				94E9662E1C1EA4BF00EE7E24 /* Transform.h */,
-				94E966321C1EA4BF00EE7E24 /* variables.h */,
 				942A408A1C38DA010017284B /* raytracer_display.cpp */,
-				948CAFDA1C3971D2007C2366 /* object.h */,
 				948CAFDB1C3AAD4B007C2366 /* object_transform.h */,
 				948CAFDC1C3AAFA3007C2366 /* light.h */,
 				94B072521C3C065200BF9CC9 /* raytrace_camera.h */,
@@ -129,6 +126,9 @@
 				94B072531C3C0BB600BF9CC9 /* scene.h */,
 				94B072561C3C0E3C00BF9CC9 /* scene.cpp */,
 				94B072581C3C1DD600BF9CC9 /* myutil.h */,
+				948CAFDA1C3971D2007C2366 /* object.h */,
+				94D6CB251C3E9AAD00FD0F69 /* object.cpp */,
+				94D6CB271C3EAACC00FD0F69 /* defines.h */,
 			);
 			path = "hw2-xcode-project";
 			sourceTree = "<group>";
@@ -219,11 +219,11 @@
 			files = (
 				94B072571C3C0E3C00BF9CC9 /* scene.cpp in Sources */,
 				942A408B1C38DA960017284B /* raytracer_display.cpp in Sources */,
+				94D6CB261C3E9AAD00FD0F69 /* object.cpp in Sources */,
 				94B072551C3C0C6E00BF9CC9 /* raytrace_camera.cpp in Sources */,
 				94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */,
 				94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */,
 				94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */,
-				94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

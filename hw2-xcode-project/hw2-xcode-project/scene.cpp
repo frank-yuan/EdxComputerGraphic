@@ -46,9 +46,9 @@ void scene::LoadData(const char* filename)
         stack <mat4> transfstack;
         transfstack.push(mat4(1.0));  // identity
         
-        float ambient[4];
-        float diffuse[4];
-        float specular[4];
+        glm::vec3 ambient;
+        glm::vec3 diffuse;
+        glm::vec3 specular;
         float shininess;
         glm::ivec2 screensize;
         int maxdepth;
@@ -97,21 +97,19 @@ void scene::LoadData(const char* filename)
                     validinput = readvals(s, 3, values); // colors
                     if (validinput) {
                         for (i = 0; i < 3; i++) {
-                            ambient[i] = values[i];
+                            ambient = glm::vec3(values[0], values[1], values[2]);
                         }
                     }
                 } else if (cmd == "diffuse") {
                     validinput = readvals(s, 3, values);
                     if (validinput) {
-                        for (i = 0; i < 3; i++) {
-                            diffuse[i] = values[i];
-                        }
+                        diffuse = glm::vec3(values[0], values[1], values[2]);
                     }
                 } else if (cmd == "specular") {
                     validinput = readvals(s, 3, values);
                     if (validinput) {
                         for (i = 0; i < 3; i++) {
-                            specular[i] = values[i];
+                            specular = glm::vec3(values[0], values[1], values[2]);
                         }
                     }
 //                } else if (cmd == "emission") {
@@ -161,12 +159,10 @@ void scene::LoadData(const char* filename)
                     if (validinput)
                     {
                         sphere_object* obj = new sphere_object();
-                        obj->size = values[3];
-                        for (i = 0; i < 3; i++) {
-                            (obj->ambient)[i] = ambient[i];
-                            (obj->diffuse)[i] = diffuse[i];
-                            (obj->specular)[i] = specular[i];
-                        }
+                        obj->radius = values[3];
+                        obj->ambient = ambient;
+                        obj->diffuse = diffuse;
+                        obj->specular = specular;
                         obj->shininess = shininess;
                         
                         // Set the object's transform
