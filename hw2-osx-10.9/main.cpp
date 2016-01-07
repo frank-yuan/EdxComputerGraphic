@@ -23,7 +23,6 @@ using namespace std;
 // Main variables in the program.
 #define MAINPROGRAM
 #include "variables.h"
-#include "readfile.h" // prototypes for readfile.cpp
 void display(void);  // prototype for display function.
 void raytracer_display(void);
 void raytracer_reshape(int width, int height);
@@ -182,44 +181,32 @@ int main(int argc, char* argv[])
     FreeImage_Initialise();
     glutInit(&argc, argv);
     
-    if (useOpenGL)
+    glutInitDisplayMode(GLUT_RGB);
+    glutCreateWindow("Raytracer: Scene Viewer");
+    scene myscene;
+    myscene.LoadData(argv[1]);
+    glm::ivec2 screenSize = myscene.GetCamera().GetScreenSize();
+    int totalPixels = screenSize.x * screenSize.y;
+    BYTE* pixels = (BYTE*)malloc(sizeof(BYTE) * totalPixels * 3);
+    for (int i = 0; i < screenSize.x; ++i)
     {
-        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-        glutCreateWindow("HW2: Scene Viewer");
-        init();
-        glutDisplayFunc(display);
-        glutReshapeFunc(reshape);
-        readfile(argv[1]);
-        glEnable(GL_DEPTH_TEST);
-        glutSpecialFunc(specialKey);
-        glutKeyboardFunc(keyboard);
-    }
-    else
-    {
-        glutInitDisplayMode(GLUT_RGB);
-        glutCreateWindow("Raytracer: Scene Viewer");
-        scene myscene;
-        myscene.LoadData(argv[1]);
-        glm::ivec2 screenSize = myscene.GetCamera().GetScreenSize();
-        BYTE* pixels = (BYTE*)malloc(sizeof(BYTE) * screenSize.x * screenSize.y * 3);
-        for (int i = 0; i < screenSize.x; ++i)
+        for (int j = 0; j < screenSize.y; ++j)
         {
-            for (int j = 0; j < screenSize.y; ++j)
-            {
-                raycast_hit hit = myscene.GetCamera().SingleRayTracing(glm::ivec2(i, j), myscene);
-                int color = GetColorInt(hit.color);
-                pixels[(i+(j * screenSize.x)) * 3 + 0] = (color >> 16) & 0xFF;
-                pixels[(i+(j * screenSize.x)) * 3 + 1] = (color >> 8) & 0xFF;
-                pixels[(i+(j * screenSize.x)) * 3 + 2] = (color) & 0xFF;
-                
-            }
+            raycast_hit hit = myscene.GetCamera().SingleRayTracing(glm::ivec2(i, j), myscene);
+            int color = GetColorInt(hit.color);
+            pixels[(i+(j * screenSize.x)) * 3 + 0] = (color >> 16) & 0xFF;
+            pixels[(i+(j * screenSize.x)) * 3 + 1] = (color >> 8) & 0xFF;
+            pixels[(i+(j * screenSize.x)) * 3 + 2] = (color) & 0xFF;
+            std::cout << (int)((j * screenSize.x + i) * 100.0f / totalPixels) << "%" << std::endl;
         }
-        FIBITMAP *img = FreeImage_ConvertFromRawBits(pixels, w, h, w * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
-        FreeImage_Save(FIF_PNG, img, fname.c_str(), 0);
-
-        glutDisplayFunc(raytracer_display);
-        glutReshapeFunc(raytracer_reshape);
     }
+    FIBITMAP *img = FreeImage_ConvertFromRawBits(pixels, w, h, w * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    //TODO: output file name
+    FreeImage_Save(FIF_PNG, img, "testoutput", 0);
+    
+    glutDisplayFunc(raytracer_display);
+    glutReshapeFunc(raytracer_reshape);
+    
     
     glutReshapeWindow(w, h);
     

@@ -24,7 +24,4 @@ struct direction_light : public light
     glm::vec3 direction;
 };
 
-struct ambient_light : public light
-{
-};
 #endif /* light_h */

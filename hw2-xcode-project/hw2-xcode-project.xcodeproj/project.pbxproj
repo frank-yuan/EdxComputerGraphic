@@ -13,7 +13,6 @@
 		94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E963341C1EA4BD00EE7E24 /* display.cpp */; };
 		94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966231C1EA4BF00EE7E24 /* main.cpp */; };
 		94E966661C1EA4BF00EE7E24 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E966251C1EA4BF00EE7E24 /* libfreeimage.a */; };
-		94E966671C1EA4BF00EE7E24 /* readfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E966261C1EA4BF00EE7E24 /* readfile.cpp */; };
 		94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */; };
 		94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */; };
 		94E9666C1C1EA78E00EE7E24 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E9666B1C1EA78E00EE7E24 /* GLUT.framework */; };
@@ -52,8 +51,6 @@
 		94E966221C1EA4BF00EE7E24 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeImage.h; sourceTree = "<group>"; };
 		94E966231C1EA4BF00EE7E24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../hw2-osx-10.9/main.cpp"; sourceTree = "<group>"; };
 		94E966251C1EA4BF00EE7E24 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreeimage.a; sourceTree = "<group>"; };
-		94E966261C1EA4BF00EE7E24 /* readfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readfile.cpp; path = "../../hw2-osx-10.9/readfile.cpp"; sourceTree = "<group>"; };
-		94E966271C1EA4BF00EE7E24 /* readfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readfile.h; path = "../../hw2-osx-10.9/readfile.h"; sourceTree = "<group>"; };
 		94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shaders.cpp; path = "../../hw2-osx-10.9/shaders.cpp"; sourceTree = "<group>"; };
 		94E9662C1C1EA4BF00EE7E24 /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shaders.h; path = "../../hw2-osx-10.9/shaders.h"; sourceTree = "<group>"; };
 		94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = "../../hw2-osx-10.9/Transform.cpp"; sourceTree = "<group>"; };
@@ -118,8 +115,6 @@
 				94E966241C1EA4BF00EE7E24 /* osxlib */,
 				94E963341C1EA4BD00EE7E24 /* display.cpp */,
 				94E966231C1EA4BF00EE7E24 /* main.cpp */,
-				94E966261C1EA4BF00EE7E24 /* readfile.cpp */,
-				94E966271C1EA4BF00EE7E24 /* readfile.h */,
 				94E9662B1C1EA4BF00EE7E24 /* shaders.cpp */,
 				94E9662C1C1EA4BF00EE7E24 /* shaders.h */,
 				94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */,
@@ -229,7 +224,6 @@
 				94E966681C1EA4BF00EE7E24 /* shaders.cpp in Sources */,
 				94E966651C1EA4BF00EE7E24 /* main.cpp in Sources */,
 				94E966331C1EA4BF00EE7E24 /* display.cpp in Sources */,
-				94E966671C1EA4BF00EE7E24 /* readfile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

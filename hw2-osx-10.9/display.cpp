@@ -17,7 +17,6 @@
 
 using namespace std ;
 #include "variables.h"
-#include "readfile.h"
 #include "object.h"
 
 // New helper transformation function to transform vector by modelview

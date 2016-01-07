@@ -19,6 +19,8 @@ typedef glm::core::type::vec3 vec3 ;
 typedef glm::core::type::vec4 vec4 ;
 typedef glm::core::type::ivec3 ivec3;
 
+struct raycast_hit;
+
 enum shape
 {
     cube,
@@ -29,12 +31,14 @@ enum shape
 class scene_object {
 public:
     shape type ;
-    float ambient[4] ;
-    float diffuse[4] ;
-    float specular[4] ;
-    float emission[4] ;
+    float ambient[3] ;
+    float diffuse[3] ;
+    float specular[3] ;
+//    float emission[4] ;
     float shininess ;
     object_transform transform;
+    
+    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
     
 };
 
@@ -42,6 +46,7 @@ class sphere_object : public scene_object
 {
 public:
     float size ;
+    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
 };
 
 class mesh_object : public scene_object
@@ -49,6 +54,7 @@ class mesh_object : public scene_object
 public:
     void LoadVertices(int count, vec3 data[]);
     void LoadTriangles(int count, ivec3 data[]);
+    virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
 private:
     int vertex_count;
     vec3* vertices;
