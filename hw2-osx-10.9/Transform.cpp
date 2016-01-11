@@ -55,10 +55,10 @@ mat4 Transform::lookAt(const vec3 &eyepos, const vec3 &center, const vec3 &up)
 {
     vec3 eye = eyepos - center;
     vec3 n = glm::normalize(eye);
-    vec3 u = glm::normalize(glm::cross(n, up));
+    vec3 u = glm::normalize(glm::cross(up, n));
     vec3 v = glm::cross(n, u);
-    glm::mat4 m = glm::mat4(vec4(-u, -glm::dot(eye, u)),
-                            vec4(-v, -glm::dot(eye, v)),
+    glm::mat4 m = glm::mat4(vec4(u, -glm::dot(eye, u)),
+                            vec4(v, -glm::dot(eye, v)),
                             vec4(n, -glm::dot(eye, n)),
                             vec4(0, 0, 0, 1));
     // You will change this return call
