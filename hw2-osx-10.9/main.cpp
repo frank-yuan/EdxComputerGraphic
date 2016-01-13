@@ -12,11 +12,12 @@
 #include <deque>
 #include <stack>
 #include <GLUT/glut.h>
+#include <FreeImage.h>
 #include "shaders.h"
 #include "Transform.h"
 #include "scene.h"
 #include "myutil.h"
-#include <FreeImage.h>
+#include "progress_recorder.h"
 
 using namespace std;
 
@@ -26,6 +27,10 @@ void display(void);  // prototype for display function.
 void raytracer_display(void);
 void raytracer_reshape(int width, int height);
 
+void printProgress(int progress)
+{
+    std::cout << progress << "%" << std::endl;
+}
 
 int main(int argc, char* argv[])
 {
@@ -43,12 +48,14 @@ int main(int argc, char* argv[])
     scene myscene;
     myscene.LoadData(argv[1]);
     glm::ivec2 screenSize = myscene.GetCamera().GetScreenSize();
+    //myscene.GetCamera().SingleRayTracing(screenSize / 2, myscene);
     
     int totalPixels = screenSize.x * screenSize.y;
 
     BYTE* pixels = (BYTE*)malloc(sizeof(BYTE) * totalPixels * 3);
 
-
+    progress_recorder recorder(totalPixels - 1);
+    recorder.RegisterChangedEvent(printProgress);
     
     for (int y = 0; y < screenSize.y; ++y)
     {
@@ -60,22 +67,21 @@ int main(int argc, char* argv[])
             pixels[(x+(y * screenSize.x)) * 3 + 1] = (color >> 8) & 0xFF;
             pixels[(x+(y * screenSize.x)) * 3 + 2] = (color >> 16) & 0xFF;
 
-            
-            std::cout << (int)((y * screenSize.x + x) * 100.0f / totalPixels) << "%" <<  "\t" << color <<  "\t" << ((color >> 16) & 0xFF) <<　"\t" << ((color >> 8) & 0xFF) << "\t" << ((color) & 0xFF) << std::endl;
+            recorder.UpdateProgress(x+(y * screenSize.x));
         }
     }
     FIBITMAP *img = FreeImage_ConvertFromRawBits(pixels, screenSize.x, screenSize.y, screenSize.x * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, true);
     //TODO: output file name
     FreeImage_Save(FIF_PNG, img, "testoutput.png", 0);
     FreeImage_DeInitialise();
-    glutDisplayFunc(raytracer_display);
-    glutReshapeFunc(raytracer_reshape);
-    
-    
-    glutReshapeWindow(screenSize.x, screenSize.y);
-    
-    
-    //printHelp();
-    glutMainLoop();
+//    glutDisplayFunc(raytracer_display);
+//    glutReshapeFunc(raytracer_reshape);
+//    
+//    
+//    glutReshapeWindow(screenSize.x, screenSize.y);
+//    
+//    
+//    //printHelp();
+//    glutMainLoop();
     return 0;
 }

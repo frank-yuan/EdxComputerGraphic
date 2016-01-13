@@ -12,6 +12,10 @@
 #include "object.h"
 #include "raytrace_camera.h"
 
+///////////////////////////////////////////////////////////////////////////
+//                          Sphere Object Implementation                 //
+///////////////////////////////////////////////////////////////////////////
+
 void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit)
 {
     float a = glm::dot(direction, direction);
@@ -56,7 +60,7 @@ void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, ra
             
         }
 
-        if (distance > 0)
+        if (distance > 0 && distance < rayhit.distance)
         {
             rayhit.distance = distance;
             rayhit.object = this;
@@ -65,4 +69,171 @@ void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, ra
             rayhit.color = ambient + diffuse;
         }
     }
+}
+
+///////////////////////////////////////////////////////////////////////////
+//                          Vertex Cache Implementation                  //
+///////////////////////////////////////////////////////////////////////////
+
+vertex_cache* vertex_cache::sInstance = NULL;
+vertex_cache* vertex_cache::Instance()
+{
+    if (sInstance == NULL)
+    {
+        sInstance = new vertex_cache();
+    }
+    return sInstance;
+}
+
+vertex_data vertex_cache::AddVertices(int count, vec3* data)
+{
+    vertex_data result;
+    result.count = count;
+    result.vertices = data;
+    return result;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//                          Mesh Object Implementation                   //
+///////////////////////////////////////////////////////////////////////////
+void mesh_object::AddTriangle(ivec3 data)
+{
+    mTriangles.push_back(data);
+}
+
+void mesh_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit)
+{
+    // TODO: use AABB test to accelerate
+    // iterate all triangles
+    typedef std::vector<ivec3>::const_iterator triangleConstIter;
+    for (triangleConstIter iter = mTriangles.begin(); iter != mTriangles.end(); ++iter)
+    {
+        ivec3 triangleIndex = *iter;
+        if (LineTriangleIntersectTest(triangleIndex, location, direction, rayhit))
+        {
+            // need do anything?
+        }
+    }
+}
+
+
+// Solve linear equation with following form
+// a1x + b1y = c1
+// a2x + b2y = c2
+// parameters should be vectors with [a1, b1, c1], [a2, b2, c2]
+// result should be a float[2]
+
+bool SolveTwoVarLinearEquations(std::vector<vec3>& parameterVectors, float result[])
+{
+    std::vector<vec3> legalVectors;
+    for (int i = 0; i < parameterVectors.size(); ++i)
+    {
+        vec3 v = parameterVectors[i];
+        float sum = ABS(v.x) + ABS(v.y) + ABS(v.z);
+        if (!IS_FLOAT_EQUALS(sum, 0))
+        {
+            legalVectors.push_back(v);
+        }
+    }
+    if (legalVectors.size() > 1)
+    {
+        vec3 v1 = legalVectors[0];
+        vec3 v2 = legalVectors[1];
+        float numerator = (v1.x * v2.y - v1.y * v2.x);
+        if (IS_FLOAT_EQUALS(numerator, 0))
+        {
+            return false;
+        }
+//        float y = (v2.x * v1.z - v2.z * v1.x) / (v1.x * v2.y + v2.x * v1.y);
+        //float x = (v1.z - v1.y * y) / v1.x;
+        float x = (v1.z * v2.y - v1.y * v2.z) / numerator;
+        float y = (v1.x * v2.z - v1.z * v2.x) / numerator;
+        result[0] = x;
+        result[1] = y;
+        return true;
+    }
+    return false;
+}
+
+
+
+bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit)
+{
+    vec3 vertices[3];
+    // TODO: cache
+    for (int i = 0; i < 3; ++i)
+    {
+        vec4 location = transform.GetTransform() * vec4(*(mVertexData.vertices + triangleIndex[i]), 1);
+        vertices[i] = vec3(location / location.w);
+    }
+    // Calculate normal
+    vec3 normal = glm::normalize(glm::cross(vertices[1] - vertices[0], vertices[2] - vertices[0]));
+    
+    // backface culling
+    if (glm::dot(direction, normal) > 0)
+    {
+        return false;
+    }
+    
+    // calculate intersect point on the plane
+    float distance = (glm::dot(vertices[0], normal) - glm::dot(location, normal))/glm::dot(direction, normal);
+    
+    if (distance <= 0 || distance > rayhit.distance)
+        return false;
+
+    vec3 intersectPoint = location + direction * distance;
+    
+    // Test whether the intersect point is in the triangle
+    vec3 P_A = intersectPoint - vertices[0];
+    vec3 B_A = vertices[1] - vertices[0];
+    vec3 C_A = vertices[2] - vertices[0];
+    
+    // (B-A)x + (C-A)y = P-A
+    float result[2];
+    std::vector<vec3> equationParameters;
+    for (int i = 0; i < 3; ++i)
+    {
+        equationParameters.push_back(vec3(B_A[i], C_A[i], P_A[i]));
+    }
+    if (SolveTwoVarLinearEquations(equationParameters, result))
+    {
+        float x = result[0];
+        float y = result[1];
+        // Now we know the insect point is inside the triangle
+        if (x <= 1 && x >= 0 && y <= 1 && y >= 0 && x + y <= 1)
+        {
+            rayhit.distance = distance;
+            rayhit.location = intersectPoint;
+            rayhit.color = diffuse + ambient;
+            rayhit.normal = normal;
+            rayhit.object = this;
+            return true;
+        }
+    }
+    return false;
+    
+    
+//    float numerator = B_A.x * C_A.y - C_A.x * B_A.y;
+//    if (IS_FLOAT_EQUALS(numerator, 0))
+//        return false;
+//    float gamma = (B_A.x * P_A.y - B_A.y * P_A.x) / (numerator);
+//    if (gamma > 1 || gamma < 0)
+//        return false;
+//    
+//    float beta = (P_A.x - gamma * C_A.x) / B_A.x;
+//    if (beta > 1 || beta < 0)
+//        return false;
+//    
+//    float gpb = gamma + beta;
+//    if (gpb > 1)
+//        return false;
+//    
+//    // Now we can say the line intersect with triangle
+//    rayhit.distance = distance;
+//    rayhit.location = intersectPoint;
+//    rayhit.color = diffuse + ambient;
+//    rayhit.normal = normal;
+//    rayhit.object = this;
+//    return true;
+    
 }

@@ -17,6 +17,7 @@
 		94E966691C1EA4BF00EE7E24 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94E9662D1C1EA4BF00EE7E24 /* Transform.cpp */; };
 		94E9666C1C1EA78E00EE7E24 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E9666B1C1EA78E00EE7E24 /* GLUT.framework */; };
 		94E9666E1C1EA7D900EE7E24 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */; };
+		94EF14601C43EEC80006A31E /* progress_recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94EF145E1C43EEC80006A31E /* progress_recorder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,8 @@
 		94E9666D1C1EA7D900EE7E24 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		94EAC2391C1F0B2F00572B0D /* light.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.frag.glsl; sourceTree = "<group>"; };
 		94EAC23A1C1F0B2F00572B0D /* light.vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = light.vert.glsl; sourceTree = "<group>"; };
+		94EF145E1C43EEC80006A31E /* progress_recorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = progress_recorder.cpp; sourceTree = "<group>"; };
+		94EF145F1C43EEC80006A31E /* progress_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = progress_recorder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				948CAFDA1C3971D2007C2366 /* object.h */,
 				94D6CB251C3E9AAD00FD0F69 /* object.cpp */,
 				94D6CB271C3EAACC00FD0F69 /* defines.h */,
+				94EF145E1C43EEC80006A31E /* progress_recorder.cpp */,
+				94EF145F1C43EEC80006A31E /* progress_recorder.h */,
 			);
 			path = "hw2-xcode-project";
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94EF14601C43EEC80006A31E /* progress_recorder.cpp in Sources */,
 				94B072571C3C0E3C00BF9CC9 /* scene.cpp in Sources */,
 				942A408B1C38DA960017284B /* raytracer_display.cpp in Sources */,
 				94D6CB261C3E9AAD00FD0F69 /* object.cpp in Sources */,

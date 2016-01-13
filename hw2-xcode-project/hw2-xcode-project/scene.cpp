@@ -52,6 +52,12 @@ void scene::LoadData(const char* filename)
         float shininess;
         glm::ivec2 screensize;
         int maxdepth;
+        int maxverts = 0;
+        int currentverts = 0;
+        int currentTriangles = 0;
+        mesh_object* meshObj = NULL;
+        vec3* vertices = NULL;
+        vertex_data vertexdata;
         
         getline (in, str);
         while (in) {
@@ -65,6 +71,10 @@ void scene::LoadData(const char* filename)
                 // Up to 10 params for cameras.
                 bool validinput; // Validity of input
                 
+                if (cmd != "tri")
+                {
+                    currentTriangles = 0;
+                }
                 // Process the light, add it to database.
                 // Lighting Command
                 if (cmd == "point") {
@@ -169,10 +179,56 @@ void scene::LoadData(const char* filename)
                         obj->transform.SetTransform(transfstack.top() * glm::mat4(glm::vec4(1, 0, 0, 0),
                                                                                   glm::vec4(0, 1, 0, 0),
                                                                                   glm::vec4(0, 0, 1, 0),
-                                                                                  glm::vec4(values[1], values[2], values[3], 1)
+                                                                                  glm::vec4(values[0], values[1], values[2], 1)
                                                                                   ));
                         mObjects.push_back((scene_object*)obj);
                     }
+                }
+                else if (cmd == "maxverts")
+                {
+                    validinput = readvals(s, 1, values);
+                    if (validinput)
+                    {
+                        maxverts = values[0];
+                        currentverts = 0;
+                        currentTriangles = 0;
+                        vertices = (vec3*)malloc(sizeof(vec3) * maxverts);
+                    }
+                }
+                else if (cmd == "vertex")
+                {
+                    validinput = readvals(s, 3, values);
+                    if (validinput)
+                    {
+                        if (currentverts < maxverts)
+                        {
+                            *(vertices + currentverts) = vec3(values[0], values[1], values[2]);
+                        }
+                        
+                        if (currentverts == maxverts - 1)
+                        {
+                            vertexdata = vertex_cache::Instance()->AddVertices(maxverts, vertices);
+                        }
+                        
+                        ++currentverts;
+                    }
+                }
+                else if (cmd == "tri")
+                {
+                    validinput = readvals(s, 3, values);
+                    if (currentTriangles == 0)  // new mesh object
+                    {
+                        meshObj = new mesh_object(vertexdata);
+                        meshObj->transform.SetTransform(transfstack.top());
+                        meshObj->ambient = ambient;
+                        meshObj->diffuse = diffuse;
+                        meshObj->specular = specular;
+                        meshObj->shininess = shininess;
+                        mObjects.push_back(meshObj);
+                    }
+                    assert(meshObj != NULL);
+                    meshObj->AddTriangle(ivec3(values[0], values[1], values[2]));
+                    ++currentTriangles;
                 }
                 
                 // I've left the code for loading objects in the skeleton, so

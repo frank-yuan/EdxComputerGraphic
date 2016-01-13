@@ -10,6 +10,7 @@
 #define object_h
 
 #include <glm/glm.hpp>
+#include <vector>
 #include "object_transform.h"
 
 
@@ -49,16 +50,34 @@ public:
     void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
 };
 
+struct vertex_data
+{
+    int count;
+    vec3* vertices;
+    vertex_data():count(0), vertices(NULL){}
+};
+
+class vertex_cache
+{
+public:
+    static vertex_cache* Instance();
+    vertex_data AddVertices(int count, vec3* data);
+private:
+    vertex_cache(){};
+    static vertex_cache* sInstance;
+};
+
 class mesh_object : public scene_object
 {
 public:
-    void LoadVertices(int count, vec3 data[]);
-    void LoadTriangles(int count, ivec3 data[]);
-    void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit){};
+    mesh_object(vertex_data vertexData):mVertexData(vertexData){};
+    void AddTriangle(ivec3 data);
+    void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
 private:
-    int vertex_count;
-    vec3* vertices;
-    int triangle_count;
-    ivec3* triangles;
+    bool LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
+private:
+    vertex_data mVertexData;
+    //int mTriangleCount;
+    std::vector<ivec3> mTriangles;
 };
 #endif /* object_h */

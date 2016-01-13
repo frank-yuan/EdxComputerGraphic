@@ -55,11 +55,12 @@ raycast_hit raytrace_camera::SingleRayTracing(glm::ivec2 screenPos, scene& scene
 
 glm::vec3 raytrace_camera::ScreenPosToDirection(glm::ivec2& pos) const
 {
+    glm::vec2 floatPos = glm::vec2(pos.x + 0.5f, pos.y + 0.5f);
     // first calculate fovx
     float tan_half_fovy = tan(mFovy * 3.1415926f / 360);
     float tan_half_fovx = tan_half_fovy * mScreenSize.x / mScreenSize.y;
-    float horizon = tan_half_fovx * (2 * pos.x - mScreenSize.x) / mScreenSize.x;
-    float vertical = tan_half_fovy * (mScreenSize.y - 2 * pos.y) / mScreenSize.y;
+    float horizon = tan_half_fovx * (2 * floatPos.x - mScreenSize.x) / mScreenSize.x;
+    float vertical = tan_half_fovy * (mScreenSize.y - 2 * floatPos.y) / mScreenSize.y;
     return glm::normalize(glm::vec3(horizon, vertical, -1));
 }
 
