@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     }
     FIBITMAP *img = FreeImage_ConvertFromRawBits(pixels, screenSize.x, screenSize.y, screenSize.x * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, true);
     //TODO: output file name
-    FreeImage_Save(FIF_PNG, img, "testoutput.png", 0);
+    FreeImage_Save(FIF_PNG, img, myscene.GetOutputFilename(), 0);
     FreeImage_DeInitialise();
 //    glutDisplayFunc(raytracer_display);
 //    glutReshapeFunc(raytracer_reshape);

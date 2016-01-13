@@ -317,12 +317,17 @@ void scene::LoadData(const char* filename)
                 // I include the basic push/pop code for matrix stacks
                 else if (cmd == "pushTransform") {
                     transfstack.push(transfstack.top());
-                } else if (cmd == "popTransform") {
+                }
+                else if (cmd == "popTransform") {
                     if (transfstack.size() <= 1) {
                         cerr << "Stack has no elements.  Cannot Pop\n";
                     } else {
                         transfstack.pop();
                     }
+                }
+                else if (cmd == "output")
+                {
+                    s >> mOutputFilename;
                 }
                 
                 else {

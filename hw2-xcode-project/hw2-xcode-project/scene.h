@@ -9,6 +9,7 @@
 #ifndef scene_h
 #define scene_h
 #include <vector>
+#include <string>
 #include "object.h"
 #include "light.h"
 #include "raytrace_camera.h"
@@ -21,6 +22,7 @@ public:
     inline const std::vector<scene_object*>& GetRenderableObject() const{return mObjects;}
     inline const std::vector<point_light*> GetPointLights() const{return mPointLights;}
     inline const std::vector<direction_light*> GetDirectionLights() const{return mDirectionalLights;}
+    inline const char* GetOutputFilename() const{return mOutputFilename.c_str();}
 
     
 private:
@@ -28,6 +30,7 @@ private:
     std::vector<scene_object*> mObjects;
     std::vector<point_light*> mPointLights;
     std::vector<direction_light*> mDirectionalLights;
+    std::string mOutputFilename = "default_output.png";
 };
 
 
