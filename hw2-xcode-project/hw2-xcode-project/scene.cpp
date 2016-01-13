@@ -49,7 +49,8 @@ void scene::LoadData(const char* filename)
         glm::vec3 ambient;
         glm::vec3 diffuse;
         glm::vec3 specular;
-        float shininess;
+        glm::vec3 emission;
+        float shininess = 0;
         glm::ivec2 screensize;
         int maxdepth;
         int maxverts = 0;
@@ -66,7 +67,6 @@ void scene::LoadData(const char* filename)
                 
                 stringstream s(str);
                 s >> cmd;
-                int i;
                 float values[10]; // Position and color for light, colors for others
                 // Up to 10 params for cameras.
                 bool validinput; // Validity of input
@@ -106,9 +106,7 @@ void scene::LoadData(const char* filename)
                 else if (cmd == "ambient") {
                     validinput = readvals(s, 3, values); // colors
                     if (validinput) {
-                        for (i = 0; i < 3; i++) {
-                            ambient = glm::vec3(values[0], values[1], values[2]);
-                        }
+                        ambient = glm::vec3(values[0], values[1], values[2]);
                     }
                 } else if (cmd == "diffuse") {
                     validinput = readvals(s, 3, values);
@@ -118,17 +116,13 @@ void scene::LoadData(const char* filename)
                 } else if (cmd == "specular") {
                     validinput = readvals(s, 3, values);
                     if (validinput) {
-                        for (i = 0; i < 3; i++) {
-                            specular = glm::vec3(values[0], values[1], values[2]);
-                        }
+                        specular = glm::vec3(values[0], values[1], values[2]);
                     }
-//                } else if (cmd == "emission") {
-//                    validinput = readvals(s, 4, values);
-//                    if (validinput) {
-//                        for (i = 0; i < 4; i++) {
-//                            emission[i] = values[i];
-//                        }
-//                    }
+                } else if (cmd == "emission") {
+                    validinput = readvals(s, 3, values);
+                    if (validinput) {
+                        emission = glm::vec3(values[0], values[1], values[2]);
+                    }
                 } else if (cmd == "shininess") {
                     validinput = readvals(s, 1, values);
                     if (validinput) {
@@ -174,6 +168,7 @@ void scene::LoadData(const char* filename)
                         obj->diffuse = diffuse;
                         obj->specular = specular;
                         obj->shininess = shininess;
+                        obj->emission = emission;
                         
                         // Set the object's transform
                         obj->transform.SetTransform(transfstack.top() * glm::mat4(glm::vec4(1, 0, 0, 0),

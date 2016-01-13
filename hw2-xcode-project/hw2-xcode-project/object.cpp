@@ -16,10 +16,13 @@
 //                          Sphere Object Implementation                 //
 ///////////////////////////////////////////////////////////////////////////
 
-void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit)
+void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, raycast_hit& rayhit)
 {
+    mat4 invertMatrix = glm::inverse(transform.GetTransform());
+    vec3 location = vec3(invertMatrix * vec4(_location, 1));
+    vec3 direction = glm::normalize(vec3(invertMatrix * vec4(_direction, 0)));
     float a = glm::dot(direction, direction);
-    vec3 v1 = location - transform.GetLocation();
+    vec3 v1 = location;
     float b = 2 * glm::dot(direction, v1);
     float c = glm::dot(v1, v1) - radius * radius;
     
@@ -34,7 +37,7 @@ void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, ra
             rayhit.object = this;
             rayhit.location = location + direction * distance;
             rayhit.normal = glm::normalize(rayhit.location - transform.GetLocation());
-            rayhit.color = ambient + diffuse;
+            rayhit.color = ambient + emission + diffuse;
         }
     }
     else if (delta > 0)
@@ -59,15 +62,22 @@ void sphere_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, ra
             }
             
         }
-
-        if (distance > 0 && distance < rayhit.distance)
+        if (distance > 0)
         {
-            rayhit.distance = distance;
-            rayhit.object = this;
-            rayhit.location = location + direction * distance;
-            rayhit.normal = glm::normalize(rayhit.location - transform.GetLocation());
-            rayhit.color = ambient + diffuse;
+            vec4 intersectPos4 = transform.GetTransform() * vec4(location + distance * direction, 1);
+            vec3 intersectPos = vec3(intersectPos4)/intersectPos4.w;
+            float distanceInWorldCoordinate = glm::length(intersectPos - _location);
+            if (distanceInWorldCoordinate < rayhit.distance)
+            {
+                rayhit.distance = distanceInWorldCoordinate;
+                rayhit.object = this;
+                rayhit.location = intersectPos;
+                rayhit.normal = vec3(glm::transpose(glm::inverse(transform.GetTransform())) * vec4(_location, 1));//glm::normalize(rayhit.location - transform.GetLocation());
+                rayhit.color = ambient + emission + diffuse;
+            }
         }
+
+       
     }
 }
 
@@ -203,7 +213,7 @@ bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 locat
         {
             rayhit.distance = distance;
             rayhit.location = intersectPoint;
-            rayhit.color = diffuse + ambient;
+            rayhit.color = emission + ambient + diffuse;
             rayhit.normal = normal;
             rayhit.object = this;
             return true;

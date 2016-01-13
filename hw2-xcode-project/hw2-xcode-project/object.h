@@ -35,7 +35,7 @@ public:
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
-//    float emission[4] ;
+    vec3 emission;
     float shininess ;
     object_transform transform;
     
