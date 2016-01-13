@@ -116,12 +116,13 @@ void mesh_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, rayc
     }
 }
 
-
+/////////////////////////////////////////////////////////////////
 // Solve linear equation with following form
 // a1x + b1y = c1
 // a2x + b2y = c2
 // parameters should be vectors with [a1, b1, c1], [a2, b2, c2]
 // result should be a float[2]
+/////////////////////////////////////////////////////////////////
 
 bool SolveTwoVarLinearEquations(std::vector<vec3>& parameterVectors, float result[])
 {
@@ -144,8 +145,6 @@ bool SolveTwoVarLinearEquations(std::vector<vec3>& parameterVectors, float resul
         {
             return false;
         }
-//        float y = (v2.x * v1.z - v2.z * v1.x) / (v1.x * v2.y + v2.x * v1.y);
-        //float x = (v1.z - v1.y * y) / v1.x;
         float x = (v1.z * v2.y - v1.y * v2.z) / numerator;
         float y = (v1.x * v2.z - v1.z * v2.x) / numerator;
         result[0] = x;
@@ -211,29 +210,4 @@ bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 locat
         }
     }
     return false;
-    
-    
-//    float numerator = B_A.x * C_A.y - C_A.x * B_A.y;
-//    if (IS_FLOAT_EQUALS(numerator, 0))
-//        return false;
-//    float gamma = (B_A.x * P_A.y - B_A.y * P_A.x) / (numerator);
-//    if (gamma > 1 || gamma < 0)
-//        return false;
-//    
-//    float beta = (P_A.x - gamma * C_A.x) / B_A.x;
-//    if (beta > 1 || beta < 0)
-//        return false;
-//    
-//    float gpb = gamma + beta;
-//    if (gpb > 1)
-//        return false;
-//    
-//    // Now we can say the line intersect with triangle
-//    rayhit.distance = distance;
-//    rayhit.location = intersectPoint;
-//    rayhit.color = diffuse + ambient;
-//    rayhit.normal = normal;
-//    rayhit.object = this;
-//    return true;
-    
 }
