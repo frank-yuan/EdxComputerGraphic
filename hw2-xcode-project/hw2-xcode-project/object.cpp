@@ -28,17 +28,10 @@ void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, 
     
     float delta = b * b - 4 * a * c;
     
-    if (IS_FLOAT_EQUALS(delta, 0))
+    if (IS_FLOAT_EQUAL(delta, 0))
     {
         float distance = -b / 2 * a;
-        if (distance < rayhit.distance)
-        {
-            rayhit.distance = distance;
-            rayhit.object = this;
-            rayhit.location = location + direction * distance;
-            rayhit.normal = glm::normalize(rayhit.location - transform.GetLocation());
-            rayhit.color = ambient + emission + diffuse;
-        }
+        SetRayHit(location, direction, distance, rayhit);
     }
     else if (delta > 0)
     {
@@ -64,20 +57,28 @@ void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, 
         }
         if (distance > 0)
         {
-            vec4 intersectPos4 = transform.GetTransform() * vec4(location + distance * direction, 1);
-            vec3 intersectPos = vec3(intersectPos4)/intersectPos4.w;
-            float distanceInWorldCoordinate = glm::length(intersectPos - _location);
-            if (distanceInWorldCoordinate < rayhit.distance)
-            {
-                rayhit.distance = distanceInWorldCoordinate;
-                rayhit.object = this;
-                rayhit.location = intersectPos;
-                rayhit.normal = vec3(glm::transpose(glm::inverse(transform.GetTransform())) * vec4(_location, 1));//glm::normalize(rayhit.location - transform.GetLocation());
-                rayhit.color = ambient + emission + diffuse;
-            }
+            SetRayHit(location, direction, distance, rayhit);
         }
 
        
+    }
+}
+
+void sphere_object::SetRayHit(glm::vec3 localLocation, glm::vec3 localDirection, float distance, raycast_hit& rayhit)
+{
+    vec3 localIntersectPos = localLocation + distance * localDirection;
+    vec4 intersectPos4 = transform.GetTransform() * vec4(localIntersectPos, 1);
+    vec3 intersectPos = vec3(intersectPos4)/intersectPos4.w;
+    vec3 rayStartPos = vec3(transform.GetTransform() * vec4(localLocation, 1));
+    float distanceInWorldCoordinate = glm::length(intersectPos - rayStartPos);
+    if (distanceInWorldCoordinate < rayhit.distance)
+    {
+        rayhit.distance = distanceInWorldCoordinate;
+        rayhit.object = this;
+        rayhit.location = intersectPos;
+        mat4 imat = glm::inverse(transform.GetTransform());
+        
+        rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(localIntersectPos , 0)));
     }
 }
 
@@ -106,22 +107,64 @@ vertex_data vertex_cache::AddVertices(int count, vec3* data)
 ///////////////////////////////////////////////////////////////////////////
 //                          Mesh Object Implementation                   //
 ///////////////////////////////////////////////////////////////////////////
+typedef std::vector<ivec3>::const_iterator triangleConstIter;
+
+void mesh_object::Initialize()
+{
+    // create AABB
+    vec3 max = vec3(-std::numeric_limits<float>::max());
+    vec3 min = vec3(std::numeric_limits<float>::max());
+    for (triangleConstIter iter = mTriangles.begin();
+         iter != mTriangles.end();
+         ++iter)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                float val = mVertexData.vertices[(*iter)[j]][i];
+                if (val > max[i])
+                {
+                    max[i] = val;
+                }
+                else if (val < min[i])
+                {
+                    min[i] = val;
+                }
+            }
+        }
+    }
+    collider.SetSize(min, max);
+}
+
 void mesh_object::AddTriangle(ivec3 data)
 {
     mTriangles.push_back(data);
 }
-
-void mesh_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit)
+int triangleTested = 0;
+void mesh_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, raycast_hit& rayhit)
 {
-    // TODO: use AABB test to accelerate
-    // iterate all triangles
-    typedef std::vector<ivec3>::const_iterator triangleConstIter;
-    for (triangleConstIter iter = mTriangles.begin(); iter != mTriangles.end(); ++iter)
+
+    mat4 invertMatrix = glm::inverse(transform.GetTransform());
+    vec3 location = vec3(invertMatrix * vec4(_location, 1));
+    vec3 direction = glm::normalize(vec3(invertMatrix * vec4(_direction, 0)));
+    
+    if (collider.IntersectWithRay(location, direction))
     {
-        ivec3 triangleIndex = *iter;
-        if (LineTriangleIntersectTest(triangleIndex, location, direction, rayhit))
+        // iterate all triangles
+        for (triangleConstIter iter = mTriangles.begin(); iter != mTriangles.end(); ++iter)
         {
-            // need do anything?
+            ++triangleTested;
+            ivec3 triangleIndex = *iter;
+            if (LineTriangleIntersectTest(triangleIndex, location, direction, rayhit))
+            {
+                vec4 hitLocation = transform.GetTransform() * vec4(rayhit.location, 1);
+                rayhit.location = vec3(hitLocation) / hitLocation.w;
+                // need do anything?
+                mat4 imat = glm::inverse(transform.GetTransform());
+                
+                rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(rayhit.normal , 0)));
+            }
         }
     }
 }
@@ -133,25 +176,25 @@ void mesh_object::IntersectWithRay(glm::vec3 location, glm::vec3 direction, rayc
 // parameters should be vectors with [a1, b1, c1], [a2, b2, c2]
 // result should be a float[2]
 /////////////////////////////////////////////////////////////////
-
-bool SolveTwoVarLinearEquations(std::vector<vec3>& parameterVectors, float result[])
+vec3 cacheLegalVector[3];
+bool SolveTwoVarLinearEquations(vec3 parameterVectors[], int count, float result[])
 {
-    std::vector<vec3> legalVectors;
-    for (int i = 0; i < parameterVectors.size(); ++i)
+    int legalcount = 0;
+    for (int i = 0; i < count; ++i)
     {
         vec3 v = parameterVectors[i];
         float sum = ABS(v.x) + ABS(v.y) + ABS(v.z);
-        if (!IS_FLOAT_EQUALS(sum, 0))
+        if (!IS_FLOAT_EQUAL(sum, 0))
         {
-            legalVectors.push_back(v);
+            cacheLegalVector[legalcount++] = v;
         }
     }
-    if (legalVectors.size() > 1)
+    if (legalcount > 1)
     {
-        vec3 v1 = legalVectors[0];
-        vec3 v2 = legalVectors[1];
+        vec3 v1 = cacheLegalVector[0];
+        vec3 v2 = cacheLegalVector[1];
         float numerator = (v1.x * v2.y - v1.y * v2.x);
-        if (IS_FLOAT_EQUALS(numerator, 0))
+        if (IS_FLOAT_EQUAL(numerator, 0))
         {
             return false;
         }
@@ -172,17 +215,17 @@ bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 locat
     // TODO: cache
     for (int i = 0; i < 3; ++i)
     {
-        vec4 location = transform.GetTransform() * vec4(*(mVertexData.vertices + triangleIndex[i]), 1);
+        vec4 location = vec4(*(mVertexData.vertices + triangleIndex[i]), 1);
         vertices[i] = vec3(location / location.w);
     }
     // Calculate normal
     vec3 normal = glm::normalize(glm::cross(vertices[1] - vertices[0], vertices[2] - vertices[0]));
     
-    // backface culling
-    if (glm::dot(direction, normal) > 0)
-    {
-        return false;
-    }
+//    // backface culling
+//    if (glm::dot(direction, normal) > 0)
+//    {
+//        return false;
+//    }
     
     // calculate intersect point on the plane
     float distance = (glm::dot(vertices[0], normal) - glm::dot(location, normal))/glm::dot(direction, normal);
@@ -199,12 +242,11 @@ bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 locat
     
     // (B-A)x + (C-A)y = P-A
     float result[2];
-    std::vector<vec3> equationParameters;
     for (int i = 0; i < 3; ++i)
     {
-        equationParameters.push_back(vec3(B_A[i], C_A[i], P_A[i]));
+        equationParams[i] = vec3(B_A[i], C_A[i], P_A[i]);
     }
-    if (SolveTwoVarLinearEquations(equationParameters, result))
+    if (SolveTwoVarLinearEquations(equationParams, 3, result))
     {
         float x = result[0];
         float y = result[1];
@@ -213,7 +255,6 @@ bool mesh_object::LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 locat
         {
             rayhit.distance = distance;
             rayhit.location = intersectPoint;
-            rayhit.color = emission + ambient + diffuse;
             rayhit.normal = normal;
             rayhit.object = this;
             return true;

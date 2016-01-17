@@ -20,16 +20,14 @@ public:
     void LoadData(const char* filename);
     inline const raytrace_camera& GetCamera() const{return mCamera;}
     inline const std::vector<scene_object*>& GetRenderableObject() const{return mObjects;}
-    inline const std::vector<point_light*> GetPointLights() const{return mPointLights;}
-    inline const std::vector<direction_light*> GetDirectionLights() const{return mDirectionalLights;}
+    inline const std::vector<light*>& GetLights() const{return mLights;}
     inline const char* GetOutputFilename() const{return mOutputFilename.c_str();}
 
     
 private:
     raytrace_camera mCamera;
     std::vector<scene_object*> mObjects;
-    std::vector<point_light*> mPointLights;
-    std::vector<direction_light*> mDirectionalLights;
+    std::vector<light*> mLights;
     std::string mOutputFilename = "default_output.png";
 };
 

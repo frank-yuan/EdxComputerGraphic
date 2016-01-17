@@ -52,7 +52,7 @@ void scene::LoadData(const char* filename)
         glm::vec3 emission;
         float shininess = 0;
         glm::ivec2 screensize;
-        int maxdepth;
+        int maxdepth = 5;
         int maxverts = 0;
         int currentverts = 0;
         int currentTriangles = 0;
@@ -81,20 +81,30 @@ void scene::LoadData(const char* filename)
                     validinput = readvals(s, 6, values);
                     if (validinput)
                     {
-                        point_light* light = new point_light();
-                        light->location = glm::vec3(values[0], values[1], values[2]);
-                        light->color = glm::vec4(values[4], values[5], values[6], 1);
-                        mPointLights.push_back(light);
+                        
+                        glm::vec4 location = glm::vec4(values[0], values[1], values[2], 1);
+                        glm::vec3 color = glm::vec3(values[3], values[4], values[5]);
+                        mLights.push_back(new light(color, location));
                     }
                 }
                 else if (cmd == "directional") {
                     validinput = readvals(s, 6, values);
                     if (validinput)
                     {
-                        direction_light* light = new direction_light();
-                        light->direction = glm::vec3(values[0], values[1], values[2]);
-                        light->color = glm::vec4(values[4], values[5], values[6], 1);
-                        mDirectionalLights.push_back(light);
+                        
+                        glm::vec4 location = glm::vec4(values[0], values[1], values[2], 0);
+                        glm::vec3 color = glm::vec3(values[3], values[4], values[5]);
+                        mLights.push_back(new light(color, location));
+                    }
+                }
+                else if (cmd == "attenuation")
+                {
+                    validinput = readvals(s, 3, values);
+                    if (validinput)
+                    {
+                        light::atten_const = values[0];
+                        light::atten_linear = values[1];
+                        light::atten_quad = values[2];
                     }
                 }
                 // Material Commands
@@ -149,7 +159,7 @@ void scene::LoadData(const char* filename)
                         
                         glm::vec3 eyeinit = glm::vec3(values[0], values[1], values[2]);
                         glm::vec3 center = glm::vec3(values[3], values[4], values[5]);
-                        glm::vec3 upinit = glm::vec3(values[6], values[7], values[8]);
+                        glm::vec3 upinit = glm::normalize(glm::vec3(values[6], values[7], values[8]));
                         //upinit = Transform::upvector(upinit, center - eye);
                         float fovy = values[9];
                         mCamera.Init(eyeinit, center, upinit, screensize, fovy, maxdepth);
@@ -211,19 +221,23 @@ void scene::LoadData(const char* filename)
                 else if (cmd == "tri")
                 {
                     validinput = readvals(s, 3, values);
-                    if (currentTriangles == 0)  // new mesh object
+                    if (validinput)
                     {
-                        meshObj = new mesh_object(vertexdata);
-                        meshObj->transform.SetTransform(transfstack.top());
-                        meshObj->ambient = ambient;
-                        meshObj->diffuse = diffuse;
-                        meshObj->specular = specular;
-                        meshObj->shininess = shininess;
-                        mObjects.push_back(meshObj);
+                        if (currentTriangles == 0)  // new mesh object
+                        {
+                            meshObj = new mesh_object(vertexdata);
+                            meshObj->transform.SetTransform(transfstack.top());
+                            meshObj->ambient = ambient;
+                            meshObj->diffuse = diffuse;
+                            meshObj->specular = specular;
+                            meshObj->shininess = shininess;
+                            meshObj->emission = emission;
+                            mObjects.push_back(meshObj);
+                        }
+                        assert(meshObj != NULL);
+                        meshObj->AddTriangle(ivec3(values[0], values[1], values[2]));
+                        ++currentTriangles;
                     }
-                    assert(meshObj != NULL);
-                    meshObj->AddTriangle(ivec3(values[0], values[1], values[2]));
-                    ++currentTriangles;
                 }
                 
                 // I've left the code for loading objects in the skeleton, so
@@ -274,7 +288,7 @@ void scene::LoadData(const char* filename)
                         
                         // YOUR CODE FOR HW 2 HERE.
                         // Think about how the transformation stack is affected
-                        // You might want to use helper functions on top of file.
+                        // You might want to use helper functions on top of file. 
                         // Also keep in mind what order your matrix is!
                         
                     }
@@ -339,5 +353,9 @@ void scene::LoadData(const char* filename)
     } else {
         cerr << "Unable to Open Input Data File " << filename << "\n";
         throw 2;
+    }
+    for (int i = 0; i < mObjects.size(); ++i)
+    {
+        mObjects[i]->Initialize();
     }
 }

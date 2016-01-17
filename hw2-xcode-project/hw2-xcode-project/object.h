@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "object_transform.h"
+#include "collider.h"
 
 
 typedef glm::mat3 mat3 ;
@@ -40,6 +41,9 @@ public:
     object_transform transform;
     
     virtual void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit) = 0;
+    virtual void Initialize(){};
+protected:
+    void SetRayHit(glm::vec3 localLocation, glm::vec3 localDirection, float distance, raycast_hit& rayhit);
     
 };
 
@@ -48,6 +52,8 @@ class sphere_object : public scene_object
 public:
     float radius ;
     void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
+private:
+    void SetRayHit(glm::vec3 localLocation, glm::vec3 localDirection, float distance, raycast_hit& rayhit);
 };
 
 struct vertex_data
@@ -73,11 +79,15 @@ public:
     mesh_object(vertex_data vertexData):mVertexData(vertexData){};
     void AddTriangle(ivec3 data);
     void IntersectWithRay(glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
+    void Initialize();
 private:
     bool LineTriangleIntersectTest(ivec3 triangleIndex, glm::vec3 location, glm::vec3 direction, raycast_hit& rayhit);
+    void SetRayHit(glm::vec3 localLocation, glm::vec3 localDirection, float distance, raycast_hit& rayhit);
 private:
     vertex_data mVertexData;
     //int mTriangleCount;
     std::vector<ivec3> mTriangles;
+    vec3 equationParams[3];
+    box_collider collider;
 };
 #endif /* object_h */

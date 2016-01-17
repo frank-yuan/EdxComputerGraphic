@@ -9,19 +9,26 @@
 #ifndef light_h
 #define light_h
 
-struct light
-{
-    glm::vec4 color;
-};
+#include <glm/glm.hpp>
 
-struct point_light : public light
+class light
 {
-    glm::vec3 location;
-};
+public:
+    static float atten_const;
+    static float atten_linear;
+    static float atten_quad;
+    light(glm::vec3& color, glm::vec4& location);
+    glm::vec3 GetDirectionToLight(glm::vec3& location);
+    glm::vec3 GetLightColor(glm::vec3& location);
+private:
+    float GetAttenuation(glm::vec3& location);
+public:
+    
+private:
+    glm::vec4 mColor;
+    glm::vec4 mLocation;
+    bool isPointLight = false;
 
-struct direction_light : public light
-{
-    glm::vec3 direction;
 };
 
 #endif /* light_h */

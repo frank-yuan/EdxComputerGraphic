@@ -18,7 +18,7 @@ struct raycast_hit
     scene_object* object;
     glm::vec3 location;
     glm::vec3 normal;
-    glm::vec3 color;
+//    glm::vec3 color;
     float distance;
     raycast_hit(): distance(100000), object(NULL)
     {
@@ -31,11 +31,16 @@ public:
     
     void Init(glm::vec3 location, glm::vec3 lookAt, glm::vec3 up, glm::ivec2 screenSize, float fovy,  int maxdepth);
     glm::ivec2 GetScreenSize() const{return mScreenSize;}
-    raycast_hit SingleRayTracing(glm::ivec2 screenPos, scene& scene) const;
+    bool GetColorFromRaytracing(glm::ivec2 screenPos, scene& scene, glm::vec3& color) const;
     inline glm::mat4 GetViewMatrix() const {return mCachedViewMatrix;}
+    inline glm::vec3 GetLocation() const {return mLocation;}
     
 private:
     glm::vec3 ScreenPosToDirection(glm::ivec2& pos) const;
+    void RayTracingRenderObjects(glm::vec3 location, glm::vec3 direction, scene& scene, raycast_hit& hit) const;
+    //raycast_hit SingleRayTracing(glm::ivec2 screenPos, scene& scene) const;
+    glm::vec3 ShadingRaycastHit(scene& scene, raycast_hit& hit, vec3 inDirection, int depth = 0) const;
+    
 private:
     glm::vec3 mLocation;
     glm::vec3 mLookAt;

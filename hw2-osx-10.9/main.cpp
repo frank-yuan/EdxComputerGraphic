@@ -11,6 +11,7 @@
 #include <sstream>
 #include <deque>
 #include <stack>
+#include <cmath>
 #include <GLUT/glut.h>
 #include <FreeImage.h>
 #include "shaders.h"
@@ -18,6 +19,7 @@
 #include "scene.h"
 #include "myutil.h"
 #include "progress_recorder.h"
+#include "time_helper.h"
 
 using namespace std;
 
@@ -31,10 +33,11 @@ void printProgress(int progress)
 {
     std::cout << progress << "%" << std::endl;
 }
-
+extern int triangleTested;
 int main(int argc, char* argv[])
 {
   
+    uint64 startTime = GetTimeMs64();
     if (argc < 2) {
         cerr << "Usage: transforms scenefile [opengl]\n";
         exit(-1);
@@ -48,7 +51,8 @@ int main(int argc, char* argv[])
     scene myscene;
     myscene.LoadData(argv[1]);
     glm::ivec2 screenSize = myscene.GetCamera().GetScreenSize();
-    //myscene.GetCamera().SingleRayTracing(screenSize / 2, myscene);
+    vec3 vcolor;
+    //myscene.GetCamera().GetColorFromRaytracing(screenSize / 2, myscene, vcolor);
     
     int totalPixels = screenSize.x * screenSize.y;
 
@@ -61,12 +65,27 @@ int main(int argc, char* argv[])
     {
         for (int x = 0; x < screenSize.x; ++x)
         {
-            raycast_hit hit = myscene.GetCamera().SingleRayTracing(glm::ivec2(x, y), myscene);
-            int color = GetColorInt(hit.color);
-            pixels[(x+(y * screenSize.x)) * 3 + 0] = (color) & 0xFF;
-            pixels[(x+(y * screenSize.x)) * 3 + 1] = (color >> 8) & 0xFF;
-            pixels[(x+(y * screenSize.x)) * 3 + 2] = (color >> 16) & 0xFF;
-
+            
+            if (myscene.GetCamera().GetColorFromRaytracing(glm::ivec2(x, y), myscene, vcolor))
+            {
+                int color = GetColorInt(vcolor);
+                pixels[(x+(y * screenSize.x)) * 3 + 0] = (color) & 0xFF;
+                pixels[(x+(y * screenSize.x)) * 3 + 1] = (color >> 8) & 0xFF;
+                pixels[(x+(y * screenSize.x)) * 3 + 2] = (color >> 16) & 0xFF;
+                
+            }
+            else
+            {
+                for (int i = 0; i < 3; ++i)
+                {
+                    pixels[(x+(y * screenSize.x)) * 3 + i] = 0;
+                }
+                // customed clear color for test
+//                pixels[(x+(y * screenSize.x)) * 3 + 0] = 121;
+//                pixels[(x+(y * screenSize.x)) * 3 + 1] = 77;
+//                pixels[(x+(y * screenSize.x)) * 3 + 2] = 49;
+            }
+                        
             recorder.UpdateProgress(x+(y * screenSize.x));
         }
     }
@@ -74,6 +93,8 @@ int main(int argc, char* argv[])
     //TODO: output file name
     FreeImage_Save(FIF_PNG, img, myscene.GetOutputFilename(), 0);
     FreeImage_DeInitialise();
+    uint64 endTime = GetTimeMs64();
+    cout << "Scene file:" << myscene.GetOutputFilename() << " finish after " << (endTime - startTime) / 1000.0f << " seconds." << "tested triangles:" << triangleTested << endl;
 //    glutDisplayFunc(raytracer_display);
 //    glutReshapeFunc(raytracer_reshape);
 //    
@@ -83,5 +104,6 @@ int main(int argc, char* argv[])
 //    
 //    //printHelp();
 //    glutMainLoop();
+
     return 0;
 }
