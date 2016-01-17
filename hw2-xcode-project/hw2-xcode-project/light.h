@@ -19,6 +19,7 @@ public:
     static float atten_quad;
     light(glm::vec3& color, glm::vec4& location);
     glm::vec3 GetDirectionToLight(glm::vec3& location);
+    double GetDistanceSqToLight(glm::vec3& location);
     glm::vec3 GetLightColor(glm::vec3& location);
 private:
     float GetAttenuation(glm::vec3& location);

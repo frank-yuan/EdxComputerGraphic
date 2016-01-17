@@ -21,6 +21,16 @@ light::light(glm::vec3& color, glm::vec4& location)
     isPointLight = !IS_FLOAT_EQUAL(location.w, 0);
 }
 
+double light::GetDistanceSqToLight(glm::vec3 &location)
+{
+    if (isPointLight)
+    {
+        glm::vec3 v = glm::vec3(mLocation) - location;
+        return v.x * v.x + v.y * v.y + v.z * v.z;
+    }
+    return std::numeric_limits<double>::max();
+}
+
 glm::vec3 light::GetDirectionToLight(glm::vec3 &location)
 {
     if (isPointLight)

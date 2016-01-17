@@ -75,6 +75,7 @@ glm::vec3 raytrace_camera::ScreenPosToDirection(glm::ivec2& pos) const
     return glm::normalize(glm::vec3(horizon, vertical, -1));
 }
 
+
 glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, vec3 inDirection, int depth) const
 {
     if (hit.object == NULL || depth == mMaxDepth)
@@ -98,8 +99,8 @@ glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, v
             // Start raytracing to check light visible
             raycast_hit light_rayhit;
             myscene.GetCamera().RayTracingRenderObjects(raystart, lightDir, myscene, light_rayhit);
-            // not intersect with any object
-            if (light_rayhit.object == NULL)
+            // not intersect with any object or closer to light than hit point
+            if (light_rayhit.object == NULL || li->GetDistanceSqToLight(raystart) < light_rayhit.distance * light_rayhit.distance)
             {
                 glm::vec3 lightcolor = li->GetLightColor(raystart);
                 // Calculate diffuse

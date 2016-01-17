@@ -21,12 +21,12 @@ void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, 
     mat4 invertMatrix = glm::inverse(transform.GetTransform());
     vec3 location = vec3(invertMatrix * vec4(_location, 1));
     vec3 direction = glm::normalize(vec3(invertMatrix * vec4(_direction, 0)));
-    float a = glm::dot(direction, direction);
+    double a = 1.0;
     vec3 v1 = location;
-    float b = 2 * glm::dot(direction, v1);
-    float c = glm::dot(v1, v1) - radius * radius;
+    double b = 2 * glm::dot(direction, v1);
+    double c = glm::dot(v1, v1) - radius * radius;
     
-    float delta = b * b - 4 * a * c;
+    double delta = b * b - 4 * a * c;
     
     if (IS_FLOAT_EQUAL(delta, 0))
     {
@@ -35,13 +35,13 @@ void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, 
     }
     else if (delta > 0)
     {
-        float root = sqrt(delta);
-        float valueMax = 0.5 * (-b + root) / a;
-        float valueMin = 0.5 * (-b - root) / a;
-        float distance = -1;
+        double root = sqrt(delta);
+        double valueMax = 0.5 * (-b + root) / a;
+        double valueMin = 0.5 * (-b - root) / a;
+        double distance = -1;
         if (valueMin > 0 || valueMax > 0)
         {
-            if (valueMin > 0 && valueMax > 0)
+            if (valueMin > FLOAT_PRECISION && valueMax > FLOAT_PRECISION)
             {
                 distance = valueMin < valueMax ? valueMin : valueMax;
             }
@@ -152,18 +152,25 @@ void mesh_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, ra
     if (collider.IntersectWithRay(location, direction))
     {
         // iterate all triangles
+        raycast_hit triangle_hit;
         for (triangleConstIter iter = mTriangles.begin(); iter != mTriangles.end(); ++iter)
         {
             ++triangleTested;
             ivec3 triangleIndex = *iter;
-            if (LineTriangleIntersectTest(triangleIndex, location, direction, rayhit))
+            if (LineTriangleIntersectTest(triangleIndex, location, direction, triangle_hit))
             {
-                vec4 hitLocation = transform.GetTransform() * vec4(rayhit.location, 1);
-                rayhit.location = vec3(hitLocation) / hitLocation.w;
-                // need do anything?
-                mat4 imat = glm::inverse(transform.GetTransform());
-                
-                rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(rayhit.normal , 0)));
+                vec4 hitLocation = transform.GetTransform() * vec4(triangle_hit.location, 1);
+                triangle_hit.location = vec3(hitLocation) / hitLocation.w;
+                triangle_hit.distance = glm::length(triangle_hit.location - _location);
+                if (triangle_hit.distance < rayhit.distance)
+                {
+                    rayhit.location = triangle_hit.location;
+                    rayhit.distance = triangle_hit.distance;
+                    rayhit.object = this;
+                    
+                    mat4 imat = glm::inverse(transform.GetTransform());
+                    rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(triangle_hit.normal , 0)));
+                }
             }
         }
     }
