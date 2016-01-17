@@ -106,7 +106,7 @@ glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, v
                 vcolor += hit.object->diffuse * lightcolor * max(glm::dot(lightDir, hit.normal), .0f);
                 
                 // Calculate specular
-                glm::vec3 half = glm::normalize(glm::normalize(myscene.GetCamera().GetLocation() - hit.location) + lightDir);
+                glm::vec3 half = glm::normalize(-inDirection + lightDir);
                 
                 vcolor += hit.object->specular * lightcolor * pow(max(glm::dot(hit.normal, half), .0f), hit.object->shininess);
             }
@@ -116,14 +116,14 @@ glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, v
     if (hit.object->specular != vec3(0))
     {
         // Calculate reflection
-        vec3 eyeDir = glm::normalize(hit.location - mLocation);
+        vec3 eyeDir = inDirection;
         vec3 reflect = 2 * glm::dot(hit.normal, -eyeDir) * hit.normal + eyeDir;
         // check whether the ray hits any object
         raycast_hit newhit;
         RayTracingRenderObjects(hit.location + reflect * 0.0001f, reflect, myscene, newhit);
         if (newhit.object != NULL)
         {
-            vcolor += newhit.object->specular * ShadingRaycastHit(myscene, newhit, reflect, depth+1);
+            vcolor += hit.object->specular * ShadingRaycastHit(myscene, newhit, reflect, depth+1);
         }
     }
     return vcolor;
