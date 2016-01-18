@@ -148,29 +148,36 @@ void mesh_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, ra
     mat4 invertMatrix = glm::inverse(transform.GetTransform());
     vec3 location = vec3(invertMatrix * vec4(_location, 1));
     vec3 direction = glm::normalize(vec3(invertMatrix * vec4(_direction, 0)));
+    vec3 globalLocation;
+    float globalDistance;
     
     if (collider.IntersectWithRay(location, direction))
     {
         // iterate all triangles
         raycast_hit triangle_hit;
+        bool anyIntersect = false;
         for (triangleConstIter iter = mTriangles.begin(); iter != mTriangles.end(); ++iter)
         {
             ++triangleTested;
             ivec3 triangleIndex = *iter;
             if (LineTriangleIntersectTest(triangleIndex, location, direction, triangle_hit))
             {
-                vec4 hitLocation = transform.GetTransform() * vec4(triangle_hit.location, 1);
-                triangle_hit.location = vec3(hitLocation) / hitLocation.w;
-                triangle_hit.distance = glm::length(triangle_hit.location - _location);
-                if (triangle_hit.distance < rayhit.distance)
-                {
-                    rayhit.location = triangle_hit.location;
-                    rayhit.distance = triangle_hit.distance;
-                    rayhit.object = this;
-                    
-                    mat4 imat = glm::inverse(transform.GetTransform());
-                    rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(triangle_hit.normal , 0)));
-                }
+                anyIntersect = true;
+            }
+        }
+        if (anyIntersect)
+        {
+            vec4 hitLocation = transform.GetTransform() * vec4(triangle_hit.location, 1);
+            globalLocation = vec3(hitLocation) / hitLocation.w;
+            globalDistance = glm::length(globalLocation - _location);
+            if (globalDistance < rayhit.distance)
+            {
+                rayhit.location = globalLocation;
+                rayhit.distance = globalDistance;
+                rayhit.object = this;
+                
+                mat4 imat = glm::inverse(transform.GetTransform());
+                rayhit.normal = glm::normalize(vec3(glm::transpose(imat) * vec4(triangle_hit.normal , 0)));
             }
         }
     }

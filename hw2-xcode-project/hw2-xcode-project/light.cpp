@@ -62,7 +62,7 @@ float light::GetAttenuation(glm::vec3 &location)
     {
         atten += atten_linear * glm::length(direction);
     }
-    if (atten_const != 1)
+    if (atten_const != 0)
     {
         atten += atten_const;
     }
