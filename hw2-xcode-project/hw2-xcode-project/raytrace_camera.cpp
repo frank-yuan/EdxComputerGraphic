@@ -95,7 +95,7 @@ glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, v
             light* li = *iter;
             glm::vec3 lightDir = li->GetDirectionToLight(hit.location);
             // Get a little higher hit point
-            glm::vec3 raystart = hit.location + lightDir * 0.0001f;
+            glm::vec3 raystart = hit.location + lightDir * 0.01f;
             // Start raytracing to check light visible
             raycast_hit light_rayhit;
             myscene.GetCamera().RayTracingRenderObjects(raystart, lightDir, myscene, light_rayhit);
@@ -121,7 +121,7 @@ glm::vec3 raytrace_camera::ShadingRaycastHit(scene &myscene, raycast_hit &hit, v
         vec3 reflect = 2 * glm::dot(hit.normal, -eyeDir) * hit.normal + eyeDir;
         // check whether the ray hits any object
         raycast_hit newhit;
-        RayTracingRenderObjects(hit.location + reflect * 0.0001f, reflect, myscene, newhit);
+        RayTracingRenderObjects(hit.location + reflect * 0.01f, reflect, myscene, newhit);
         if (newhit.object != NULL)
         {
             vcolor += hit.object->specular * ShadingRaycastHit(myscene, newhit, reflect, depth+1);

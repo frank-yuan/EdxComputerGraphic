@@ -6,7 +6,6 @@
 //  Copyright © 2016 frank-yuan. All rights reserved.
 //
 
-#include <stdio.h>
 #include <math.h>
 #include "defines.h"
 #include "object.h"
@@ -27,13 +26,16 @@ void sphere_object::IntersectWithRay(glm::vec3 _location, glm::vec3 _direction, 
     double c = glm::dot(v1, v1) - radius * radius;
     
     double delta = b * b - 4 * a * c;
-    
-    if (IS_FLOAT_EQUAL(delta, 0))
+    if (delta < 0)
+    {
+        return;
+    }
+    else if (delta < FLOAT_PRECISION)
     {
         float distance = -b / 2 * a;
         SetRayHit(location, direction, distance, rayhit);
     }
-    else if (delta > 0)
+    else
     {
         double root = sqrt(delta);
         double valueMax = 0.5 * (-b + root) / a;
